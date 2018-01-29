@@ -80,8 +80,9 @@ animateAxis = (dur, interval)->
 $main = most.zip ((a,b)->b), $everyNsec(5), $countdownFrom(100)
   .tap animateAxis(20, 5)
   .map dummyBlockDataGen
+  .tap (d)-> console.log JSON.stringify d
   .map toWindowedBlock(5)
   .map toD3Tree(20, 5)
 
-#-------------------
+#----------------------------------------------------
 window.onload = -> $main.observe console.log
