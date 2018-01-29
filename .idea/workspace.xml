@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e85db101-0b03-4da3-9d0f-7962f99a6ba1" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/force.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/Util.coffee" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/force.coffee" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/tree.coffee" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/view/Block.coffee" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/view/ForceBlock.coffee" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tree.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/webpack.config.force.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/webpack.config.tree.js" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/dist/app.dev.js" afterPath="$PROJECT_DIR$/dist/app.dev.js" />
-      <change beforePath="$PROJECT_DIR$/dist/app.dev.js.map" afterPath="$PROJECT_DIR$/dist/app.dev.js.map" />
-      <change beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" afterPath="$PROJECT_DIR$/src/app.ts" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -187,8 +172,8 @@
           <file leaf-file-name="app.ts" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/app.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="258">
-                  <caret line="533" column="25" lean-forward="false" selection-start-line="533" selection-start-column="25" selection-end-line="533" selection-end-column="25" />
+                <state relative-caret-position="93">
+                  <caret line="522" column="18" lean-forward="true" selection-start-line="522" selection-start-column="18" selection-end-line="522" selection-end-column="18" />
                   <folding>
                     <element signature="e#181#21621#0" expanded="false" />
                     <element signature="e#21700#21914#0" expanded="false" />
@@ -236,8 +221,8 @@
           <file leaf-file-name="Block.coffee" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/view/Block.coffee">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="276">
-                  <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+                <state relative-caret-position="66">
+                  <caret line="67" column="26" lean-forward="true" selection-start-line="67" selection-start-column="26" selection-end-line="67" selection-end-column="26" />
                   <folding />
                 </state>
               </provider>
@@ -403,6 +388,18 @@
             <path>
               <item name="untitled2" type="b2602c69:ProjectViewProjectNode" />
               <item name="untitled2" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+              <item name="app.dev.js" type="620a8d5e:NestingTreeNode" />
+            </path>
+            <path>
+              <item name="untitled2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="untitled2" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+              <item name="tree.dev.js" type="620a8d5e:NestingTreeNode" />
+            </path>
+            <path>
+              <item name="untitled2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="untitled2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -467,12 +464,27 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1516839474251</updated>
-      <workItem from="1516839475556" duration="87976000" />
+      <workItem from="1516839475556" duration="88359000" />
     </task>
+    <task id="LOCAL-00001" summary="tree, force version 분리">
+      <created>1517187134597</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1517187134597</updated>
+    </task>
+    <task id="LOCAL-00002" summary="tree, force version 분리">
+      <created>1517187169162</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1517187169162</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87976000" />
+    <option name="totallyTimeSpent" value="88359000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -494,7 +506,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23007712" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.05364807" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14592275" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -534,6 +546,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="tree, force version 분리" />
+    <option name="LAST_COMMIT_MESSAGE" value="tree, force version 분리" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2256,22 +2272,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/Block.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="533" column="25" lean-forward="false" selection-start-line="533" selection-start-column="25" selection-end-line="533" selection-end-column="25" />
+        <state relative-caret-position="93">
+          <caret line="522" column="18" lean-forward="true" selection-start-line="522" selection-start-column="18" selection-end-line="522" selection-end-column="18" />
           <folding>
             <element signature="e#181#21621#0" expanded="false" />
             <element signature="e#21700#21914#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/Block.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="67" column="26" lean-forward="true" selection-start-line="67" selection-start-column="26" selection-end-line="67" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
