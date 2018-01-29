@@ -83,7 +83,7 @@ StationOrCar = do ()->
 # factory for sel.each()
 Block = do ->
   tree = d3.tree()
-    .size([250,400])
+#    .size([250,400])
     .nodeSize([25,150])
 
   update = (source)->
@@ -112,6 +112,12 @@ Block = do ->
     selection = d3.select(@)
     direction = if d.id % 2 then 1 else -1
 
+    switch (d.id % 4)
+      when 0 then tree.nodeSize([20,150])
+      when 1 then tree.nodeSize([20,150])
+      when 2 then tree.nodeSize([20,200])
+      when 3 then tree.nodeSize([20,200])
+
     link = selection.selectAll(".link")
       .data(tree(root).links())
       .enter().append("path")
@@ -139,7 +145,12 @@ Block = do ->
       .append("g")
       .attr('opacity',(d)-> if d.data.type == 'block' then 1 else 0 )
       .attr("class", (d)-> "node" + (if d.children then " node--internal" else " node--leaf"))
-      .attr("transform", (d) -> "translate(" + 0 + "," + 0 + ")" )
+      .attr("transform", (d) ->
+        switch d.data.type
+          when 'car' then  "translate(" + direction*d.parent.y + "," + d.parent.x + ")"
+          else "translate(" + 0 + "," + 0 + ")"
+
+      )
       .each(StationOrCar)
       .on('click', togglefold)
       .transition()
