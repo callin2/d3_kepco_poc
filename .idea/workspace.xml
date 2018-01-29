@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e85db101-0b03-4da3-9d0f-7962f99a6ba1" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
-      <change beforePath="$PROJECT_DIR$/src/Util.coffee" afterPath="$PROJECT_DIR$/src/Util.coffee" />
-      <change beforePath="$PROJECT_DIR$/src/force.coffee" afterPath="$PROJECT_DIR$/src/force.coffee" />
       <change beforePath="$PROJECT_DIR$/src/view/ForceBlock.coffee" afterPath="$PROJECT_DIR$/src/view/ForceBlock.coffee" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.force.js" afterPath="$PROJECT_DIR$/webpack.config.force.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -43,21 +39,21 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Util.coffee" pinned="false" current-in-tab="true">
+          <file leaf-file-name="Util.coffee" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Util.coffee">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="299">
-                  <caret line="23" column="17" lean-forward="false" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
+                <state relative-caret-position="416">
+                  <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="app.ts" pinned="false" current-in-tab="false">
+          <file leaf-file-name="app.ts" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/app.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1750">
-                  <caret line="666" column="48" lean-forward="false" selection-start-line="666" selection-start-column="40" selection-end-line="666" selection-end-column="48" />
+                <state relative-caret-position="346">
+                  <caret line="648" column="37" lean-forward="false" selection-start-line="648" selection-start-column="24" selection-end-line="648" selection-end-column="37" />
                   <folding>
                     <element signature="e#181#21621#0" expanded="false" />
                     <element signature="e#21700#21914#0" expanded="false" />
@@ -121,8 +117,8 @@
           <file leaf-file-name="ForceBlock.coffee" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/view/ForceBlock.coffee">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="455">
-                  <caret line="111" column="0" lean-forward="false" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
+                <state relative-caret-position="585">
+                  <caret line="127" column="42" lean-forward="true" selection-start-line="127" selection-start-column="42" selection-end-line="127" selection-end-column="42" />
                   <folding />
                 </state>
               </provider>
@@ -141,7 +137,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>append</find>
       <find>Block</find>
       <find>sel</find>
       <find>Period</find>
@@ -171,6 +166,7 @@
       <find>forceSim</find>
       <find>R.</find>
       <find>tree</find>
+      <find>forceLink</find>
     </findStrings>
     <replaceStrings>
       <replace>timeRange</replace>
@@ -335,7 +331,7 @@
       <option name="presentableId" value="Default" />
       <updated>1516839474251</updated>
       <workItem from="1516839475556" duration="88359000" />
-      <workItem from="1517188380677" duration="12861000" />
+      <workItem from="1517188380677" duration="13216000" />
     </task>
     <task id="LOCAL-00001" summary="tree, force version 분리">
       <created>1517187134597</created>
@@ -358,11 +354,18 @@
       <option name="project" value="LOCAL" />
       <updated>1517192958954</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="progrssive force">
+      <created>1517204685206</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1517204685206</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="101220000" />
+    <option name="totallyTimeSpent" value="101575000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -429,7 +432,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="tree, force version 분리" />
     <MESSAGE value="tree animation fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="tree animation fix" />
+    <MESSAGE value="progrssive force" />
+    <option name="LAST_COMMIT_MESSAGE" value="progrssive force" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -667,17 +671,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1750">
-          <caret line="666" column="48" lean-forward="false" selection-start-line="666" selection-start-column="40" selection-end-line="666" selection-end-column="48" />
-          <folding>
-            <element signature="e#181#21621#0" expanded="false" />
-            <element signature="e#21700#21914#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/force.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="574">
@@ -706,18 +699,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/ForceBlock.coffee">
+    <entry file="file://$PROJECT_DIR$/src/Util.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="111" column="0" lean-forward="false" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
+        <state relative-caret-position="416">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Util.coffee">
+    <entry file="file://$PROJECT_DIR$/src/app.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="23" column="17" lean-forward="false" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
+        <state relative-caret-position="346">
+          <caret line="648" column="37" lean-forward="false" selection-start-line="648" selection-start-column="24" selection-end-line="648" selection-end-column="37" />
+          <folding>
+            <element signature="e#181#21621#0" expanded="false" />
+            <element signature="e#21700#21914#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/ForceBlock.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="127" column="42" lean-forward="true" selection-start-line="127" selection-start-column="42" selection-end-line="127" selection-end-column="42" />
           <folding />
         </state>
       </provider>

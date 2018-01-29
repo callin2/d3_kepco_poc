@@ -108,6 +108,10 @@ ForceBlock = do ->
       allNodes.push n
       forceSim.nodes(allNodes)
 
+    setTimeout(->
+      forceLink.links(root.links())
+    ,10*1000)
+
     forceSim.on('tick', ->
       node = selection.selectAll(".node")
         .data(allNodes)
