@@ -1,21 +1,10 @@
 import * as d3 from "d3"
 import * as most from "most"
 import {periodic} from "most"
-import * as _ from "lodash"
 import ForceBlock from "./view/ForceBlock"
+import {$countdownFrom , $everyNsec, randomN,  } from "./Util.coffee"
 
 svg = d3.select('svg')
-
-randomN = (n)-> Math.floor(Math.random()*n) + 1
-$everyNsec = (n) -> periodic n*1000
-delayPromise = ( ms, value) ->
-  new Promise (res) =>
-    setTimeout =>
-      res(value)
-    ,ms
-
-countdown = (delay, start) -> yield delayPromise(delay, i) for i in [start..1]
-$countdownFrom = (n) -> most.generate(countdown,1,n)
 
 # --------- dummy data gen ---------
 dummyCarDataGen = (v) ->
@@ -47,7 +36,7 @@ toD3Tree = (dur, interval) ->
       .append('g').attr('class',"block")
       .attr('transform', 'translate(0 -400)')
       .attr('transform', (d)->"translate(0 #{timeScale(d.ts)})")
-      .each(Block)
+      .each(ForceBlock)
 
     # update
     blockGrp.merge(blockGrpEnter)

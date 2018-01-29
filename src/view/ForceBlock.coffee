@@ -1,4 +1,6 @@
+import * as most from "most"
 import * as d3 from "d3"
+import {getProp, getPropAt, $plist} from "../Util.coffee"
 
 BlockCircle = (d,i,node) ->
   selection = d3.select(@)
@@ -41,7 +43,7 @@ StationNode = (d,i,node,template) ->
   selection = d3.select(@)
   selection.append -> template.cloneNode(true)
   selection.select('.card-title strong')
-    .text((d)->d.data.type)
+    .text(getPropAt("data.type"))
 
 
 CarCircle = (d,i,node) ->
@@ -79,83 +81,54 @@ StationOrCar = do ()->
       when 'car' then CarCircle.call(@,d,i,node,template)
 
 # factory for sel.each()
-Block = do ->
-  tree = d3.tree()
-    .size([250,400])
-    .nodeSize([25,150])
-
-  update = (source)->
-    console.log('update')
-    link = selection.selectAll(".link")
-      .data(tree(root).links())
-      .exit().remove()
-
-
-
-  togglefold = (d) ->
-    console.log 'click', d
-    return if d3.event.defaultPrevented
-
-    if d.children
-      d._children = d.children;
-      d.children = null;
-    else
-      d.children = d._children;
-      d._children = null;
-
-  #    update(d)
-  
+ForceBlock = do ->
   return (d,i,n) ->
     root = d3.hierarchy(d)
     selection = d3.select(@)
     direction = if d.id % 2 then 1 else -1
 
-    link = selection.selectAll(".link")
-      .data(tree(root).links())
-      .enter().append("path")
-      .attr("stroke", "#8284d7")
-      .attr("fill", "none")
-      .attr("d", (d)-> d3.linkHorizontal().x(direction*d.source.y).y(d.source.x)(d))
-      .transition()
-      .delay((d)->
-      if d.source.parent
-        2200
-      else
-        0
-    )
-      .duration((d)->
-      if d.source.parent
-        200
-      else
-        2000
-    )
-      .ease(d3.easeQuad)
-      .attr("d", d3.linkHorizontal().x((d)-> direction*d.y).y((d)-> d.x));
+    allNodes = []
 
-    node = selection.selectAll(".node")
-      .data(root.descendants()).enter()
-      .append("g")
-      .attr('opacity',(d)-> if d.data.type == 'block' then 1 else 0 )
-      .attr("class", (d)-> "node" + (if d.children then " node--internal" else " node--leaf"))
-      .attr("transform", (d) -> "translate(" + 0 + "," + 0 + ")" )
-      .each(StationOrCar)
-      .on('click', togglefold)
-      .transition()
-      .delay((d)->
-      switch d.data.type
-        when 'block' then 0
-        when 'station' then 0
-        when 'car' then 2200
-    )
-      .duration((d)->
-      switch d.data.type
-        when 'block' then 0
-        when 'station' then 2000
-        when 'car' then 200
-    )
-      .attr("transform", (d) -> "translate(" + direction*d.y + "," + d.x + ")" )
-      .attr('opacity',1)
+    forceLink = d3.forceLink()
+      .distance(120)
+      .id(getProp('id'));
+
+    forceSim = d3.forceSimulation()
+      .force('colide', d3.forceCollide(15))
+      .force("charge", d3.forceManyBody().strength(-100))
+      .force("link", forceLink)
+      .force("x", d3.forceX( 100*direction ))
+      .force("y", d3.forceY())
+      .alphaTarget(1)
+
+    root.fx = 0
+    root.fy = 0
+
+    $plist(root.descendants(), 200).observe (n)->
+      allNodes.push n
+      forceSim.nodes(allNodes)
+
+    forceSim.on('tick', ->
+      node = selection.selectAll(".node")
+        .data(allNodes)
+
+      nodeEnter = node.enter()
+        .append("g")
+        .attr("class", (d)-> "node" + (if d.children then " node--internal" else " node--leaf"))
+        .each(StationOrCar)
+
+      node.merge(nodeEnter)
+        .attr("transform", (d) -> "translate(" + d.x + "," + d.y + ")" )
 
 
+#      node = selection.selectAll(".node")
+#        .data(root.descendants()).enter()
+#        .append("g")
+#        .attr("class", (d)-> "node" + (if d.children then " node--internal" else " node--leaf"))
+#        .attr("transform", (d) -> "translate(" + d.x + "," + d.y + ")" )
+#        .each(StationOrCar)
+#        .attr('opacity',1)
+    )
 
-export default Block
+
+export default ForceBlock

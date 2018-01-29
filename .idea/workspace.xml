@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e85db101-0b03-4da3-9d0f-7962f99a6ba1" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/dist/tree.dev.js" afterPath="$PROJECT_DIR$/dist/tree.dev.js" />
-      <change beforePath="$PROJECT_DIR$/dist/tree.dev.js.map" afterPath="$PROJECT_DIR$/dist/tree.dev.js.map" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
-      <change beforePath="$PROJECT_DIR$/src/tree.coffee" afterPath="$PROJECT_DIR$/src/tree.coffee" />
-      <change beforePath="$PROJECT_DIR$/src/view/Block.coffee" afterPath="$PROJECT_DIR$/src/view/Block.coffee" />
+      <change beforePath="$PROJECT_DIR$/src/Util.coffee" afterPath="$PROJECT_DIR$/src/Util.coffee" />
+      <change beforePath="$PROJECT_DIR$/src/force.coffee" afterPath="$PROJECT_DIR$/src/force.coffee" />
+      <change beforePath="$PROJECT_DIR$/src/view/ForceBlock.coffee" afterPath="$PROJECT_DIR$/src/view/ForceBlock.coffee" />
+      <change beforePath="$PROJECT_DIR$/webpack.config.force.js" afterPath="$PROJECT_DIR$/webpack.config.force.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,84 +20,35 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.38428876">
+    <splitter split-orientation="horizontal" split-proportion="0.38620284">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="225">
           <file leaf-file-name="webpack.config.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/webpack.config.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="4" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-                  <folding>
-                    <marker date="1517188372592" expanded="true" signature="138:584" ph="{&quot;devtool&quot;: &quot;source-map&quot;...}" />
-                    <marker date="1517188372592" expanded="true" signature="197:241" ph="{...}" />
-                    <marker date="1517188372592" expanded="true" signature="256:322" ph="{&quot;path&quot;: BUILD_DIR...}" />
-                    <marker date="1517188372592" expanded="true" signature="338:380" ph="{...}" />
-                    <marker date="1517188372592" expanded="true" signature="395:581" ph="{...}" />
-                    <marker date="1517188372592" expanded="true" signature="412:575" ph="[...]" />
-                    <marker date="1517188372592" expanded="true" signature="426:565" ph="{&quot;loader&quot;: 'awesome-typescript-loader'...}" />
-                  </folding>
+                <state relative-caret-position="104">
+                  <caret line="8" column="12" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+                  <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="tree.coffee" pinned="false" current-in-tab="true">
+          <file leaf-file-name="tree.coffee" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/tree.coffee">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="655">
-                  <caret line="84" column="30" lean-forward="true" selection-start-line="84" selection-start-column="30" selection-end-line="84" selection-end-column="30" />
+                <state relative-caret-position="13">
+                  <caret line="1" column="28" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="28" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Util.coffee" pinned="false" current-in-tab="false">
+          <file leaf-file-name="Util.coffee" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/Util.coffee">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="13">
-                  <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+                <state relative-caret-position="299">
+                  <caret line="23" column="17" lean-forward="false" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
                   <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="webpack.config.tree.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/webpack.config.tree.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="117">
-                  <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/index.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="4355">
-                  <caret line="371" column="21" lean-forward="false" selection-start-line="371" selection-start-column="21" selection-end-line="371" selection-end-column="21" />
-                  <folding>
-                    <element signature="n#script#0;n#head#0;n#html#0;n#!!top" expanded="false" />
-                    <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                    <element signature="n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
-                    <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-                    <element signature="n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Readme.md" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Readme.md">
-              <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-                <state split_layout="SPLIT">
-                  <first_editor relative-caret-position="0">
-                    <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                    <folding />
-                  </first_editor>
-                  <second_editor>
-                    <js_state />
-                  </second_editor>
                 </state>
               </provider>
             </entry>
@@ -106,12 +56,22 @@
           <file leaf-file-name="app.ts" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/app.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="340">
-                  <caret line="541" column="63" lean-forward="false" selection-start-line="541" selection-start-column="63" selection-end-line="541" selection-end-column="63" />
+                <state relative-caret-position="1750">
+                  <caret line="666" column="48" lean-forward="false" selection-start-line="666" selection-start-column="40" selection-end-line="666" selection-end-column="48" />
                   <folding>
                     <element signature="e#181#21621#0" expanded="false" />
                     <element signature="e#21700#21914#0" expanded="false" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="force.coffee" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/force.coffee">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="574">
+                  <caret line="82" column="23" lean-forward="false" selection-start-line="82" selection-start-column="23" selection-end-line="82" selection-end-column="23" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -123,8 +83,8 @@
           <file leaf-file-name="tree.html" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tree.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="208">
-                  <caret line="18" column="42" lean-forward="false" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
+                <state relative-caret-position="13">
+                  <caret line="1" column="16" lean-forward="false" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
                   <folding>
                     <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                     <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -134,19 +94,15 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="webpack.config.force.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/webpack.config.force.js">
+          <file leaf-file-name="force.html" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/force.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="143">
-                  <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+                <state relative-caret-position="117">
+                  <caret line="474" column="24" lean-forward="false" selection-start-line="474" selection-start-column="24" selection-end-line="474" selection-end-column="24" />
                   <folding>
-                    <marker date="1517188372592" expanded="true" signature="138:586" ph="{&quot;devtool&quot;: &quot;source-map&quot;...}" />
-                    <marker date="1517188372592" expanded="true" signature="197:248" ph="{...}" />
-                    <marker date="1517188372592" expanded="true" signature="263:329" ph="{&quot;path&quot;: BUILD_DIR...}" />
-                    <marker date="1517188372592" expanded="true" signature="345:391" ph="{...}" />
-                    <marker date="1517188372592" expanded="true" signature="406:583" ph="{...}" />
-                    <marker date="1517188372592" expanded="true" signature="423:577" ph="[...]" />
-                    <marker date="1517188372592" expanded="true" signature="437:567" ph="{&quot;loader&quot;: 'coffee-loader'...}" />
+                    <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                    <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
+                    <element signature="n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -155,42 +111,18 @@
           <file leaf-file-name="Block.coffee" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/view/Block.coffee">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="138">
-                  <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+                <state relative-caret-position="130">
+                  <caret line="112" column="42" lean-forward="false" selection-start-line="112" selection-start-column="4" selection-end-line="112" selection-end-column="42" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="force.html" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/force.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="156">
-                  <caret line="477" column="40" lean-forward="false" selection-start-line="477" selection-start-column="40" selection-end-line="477" selection-end-column="40" />
-                  <folding>
-                    <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                    <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-                    <element signature="n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="force.coffee" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/force.coffee">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="312">
-                  <caret line="31" column="75" lean-forward="true" selection-start-line="31" selection-start-column="75" selection-end-line="31" selection-end-column="75" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="ForceBlock.coffee" pinned="false" current-in-tab="false">
+          <file leaf-file-name="ForceBlock.coffee" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/view/ForceBlock.coffee">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1755">
-                  <caret line="135" column="30" lean-forward="false" selection-start-line="135" selection-start-column="12" selection-end-line="135" selection-end-column="30" />
+                <state relative-caret-position="455">
+                  <caret line="111" column="0" lean-forward="false" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -209,12 +141,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>force</find>
-      <find>forceLayoutInfo</find>
-      <find>5sec</find>
-      <find>perfectSquares</find>
-      <find>debuugger</find>
-      <find>_v</find>
       <find>append</find>
       <find>Block</find>
       <find>sel</find>
@@ -235,10 +161,16 @@
       <find>_</find>
       <find>updateBlockList</find>
       <find>50</find>
-      <find>tree</find>
       <find>scaleLog</find>
       <find>scaleLinea</find>
       <find>linear</find>
+      <find>tick</find>
+      <find>forceLayoutInfo.nod</find>
+      <find>.each</find>
+      <find>root</find>
+      <find>forceSim</find>
+      <find>R.</find>
+      <find>tree</find>
     </findStrings>
     <replaceStrings>
       <replace>timeRange</replace>
@@ -256,18 +188,18 @@
         <option value="$PROJECT_DIR$/src/demo2.coffee.md" />
         <option value="$PROJECT_DIR$/webpack.config.js" />
         <option value="$PROJECT_DIR$/src/app.ts" />
-        <option value="$PROJECT_DIR$/webpack.config.tree.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/src/view/Block.ts" />
-        <option value="$PROJECT_DIR$/src/Util.coffee" />
         <option value="$PROJECT_DIR$/tree.html" />
         <option value="$PROJECT_DIR$/force.html" />
-        <option value="$PROJECT_DIR$/webpack.config.force.js" />
-        <option value="$PROJECT_DIR$/src/force.coffee" />
-        <option value="$PROJECT_DIR$/src/view/ForceBlock.coffee" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/tree.coffee" />
         <option value="$PROJECT_DIR$/src/view/Block.coffee" />
+        <option value="$PROJECT_DIR$/webpack.config.tree.js" />
+        <option value="$PROJECT_DIR$/webpack.config.force.js" />
+        <option value="$PROJECT_DIR$/src/force.coffee" />
+        <option value="$PROJECT_DIR$/src/Util.coffee" />
+        <option value="$PROJECT_DIR$/src/view/ForceBlock.coffee" />
       </list>
     </option>
   </component>
@@ -321,6 +253,17 @@
             <path>
               <item name="d3_kepco_poc" type="b2602c69:ProjectViewProjectNode" />
               <item name="d3_kepco_poc" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="d3_kepco_poc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="d3_kepco_poc" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+              <item name="tree.dev.js" type="620a8d5e:NestingTreeNode" />
+            </path>
+            <path>
+              <item name="d3_kepco_poc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="d3_kepco_poc" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -364,11 +307,17 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Node.js.Util.coffee">
     <configuration name="index.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/untitled2/index.html" />
+    <configuration name="Util.coffee" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" node-parameters="--require coffee-script/register" path-to-js-file="Util.coffee" working-dir="$PROJECT_DIR$/src" />
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+      <item index="1" class="java.lang.String" itemvalue="Node.js.Util.coffee" />
+    </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="Node.js.Util.coffee" />
+        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
       </list>
     </recent_temporary>
   </component>
@@ -386,7 +335,7 @@
       <option name="presentableId" value="Default" />
       <updated>1516839474251</updated>
       <workItem from="1516839475556" duration="88359000" />
-      <workItem from="1517188380677" duration="3632000" />
+      <workItem from="1517188380677" duration="12861000" />
     </task>
     <task id="LOCAL-00001" summary="tree, force version 분리">
       <created>1517187134597</created>
@@ -402,11 +351,18 @@
       <option name="project" value="LOCAL" />
       <updated>1517187169162</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="tree animation fix">
+      <created>1517192958954</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1517192958954</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="91991000" />
+    <option name="totallyTimeSpent" value="101220000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -425,10 +381,10 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32971996" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22833844" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282365" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22833844" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12420382" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.09978768" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="LuaJ" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -472,11 +428,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="tree, force version 분리" />
-    <option name="LAST_COMMIT_MESSAGE" value="tree, force version 분리" />
+    <MESSAGE value="tree animation fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="tree animation fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -485,15 +442,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="52">
           <caret line="4" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding>
-            <marker date="1517188372592" expanded="true" signature="138:584" ph="{&quot;devtool&quot;: &quot;source-map&quot;...}" />
-            <marker date="1517188372592" expanded="true" signature="197:241" ph="{...}" />
-            <marker date="1517188372592" expanded="true" signature="256:322" ph="{&quot;path&quot;: BUILD_DIR...}" />
-            <marker date="1517188372592" expanded="true" signature="338:380" ph="{...}" />
-            <marker date="1517188372592" expanded="true" signature="395:581" ph="{...}" />
-            <marker date="1517188372592" expanded="true" signature="412:575" ph="[...]" />
-            <marker date="1517188372592" expanded="true" signature="426:565" ph="{&quot;loader&quot;: 'awesome-typescript-loader'...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -575,15 +524,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
           <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding>
-            <marker date="1517188372592" expanded="true" signature="138:586" ph="{&quot;devtool&quot;: &quot;source-map&quot;...}" />
-            <marker date="1517188372592" expanded="true" signature="197:248" ph="{...}" />
-            <marker date="1517188372592" expanded="true" signature="263:329" ph="{&quot;path&quot;: BUILD_DIR...}" />
-            <marker date="1517188372592" expanded="true" signature="345:391" ph="{...}" />
-            <marker date="1517188372592" expanded="true" signature="406:583" ph="{...}" />
-            <marker date="1517188372592" expanded="true" signature="423:577" ph="[...]" />
-            <marker date="1517188372592" expanded="true" signature="437:567" ph="{&quot;loader&quot;: 'coffee-loader'...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -626,19 +567,6 @@
     <entry file="file://$PROJECT_DIR$/src/demo2.js" />
     <entry file="file://$PROJECT_DIR$/webpack.config.coffee" />
     <entry file="file://$PROJECT_DIR$/src/demo2.coffee.md" />
-    <entry file="file://$PROJECT_DIR$/Readme.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor>
-            <js_state />
-          </second_editor>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/most/type-definitions/most.d.ts" />
     <entry file="file://$PROJECT_DIR$/src/tree.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/most/src/source/periodic.js" />
@@ -651,10 +579,64 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/d3-axis/src/axis.js" />
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13">
+          <caret line="1" column="5" lean-forward="true" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/coffeescript/lib/coffeescript/nodes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="579">
+          <caret line="629" column="13" lean-forward="false" selection-start-line="629" selection-start-column="13" selection-end-line="629" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpack.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="8" column="12" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpack.config.tree.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Readme.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="195">
+            <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor>
+            <js_state />
+          </second_editor>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpack.config.force.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="9" column="14" lean-forward="false" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4355">
-          <caret line="371" column="21" lean-forward="false" selection-start-line="371" selection-start-column="21" selection-end-line="371" selection-end-column="21" />
+        <state relative-caret-position="52">
+          <caret line="348" column="30" lean-forward="true" selection-start-line="348" selection-start-column="30" selection-end-line="348" selection-end-column="30" />
           <folding>
             <element signature="n#script#0;n#head#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -665,67 +647,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.config.js">
+    <entry file="file://$PROJECT_DIR$/tree.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+        <state relative-caret-position="13">
+          <caret line="1" column="16" lean-forward="false" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
           <folding>
-            <marker date="1517188372592" expanded="true" signature="138:584" ph="{&quot;devtool&quot;: &quot;source-map&quot;...}" />
-            <marker date="1517188372592" expanded="true" signature="197:241" ph="{...}" />
-            <marker date="1517188372592" expanded="true" signature="256:322" ph="{&quot;path&quot;: BUILD_DIR...}" />
-            <marker date="1517188372592" expanded="true" signature="338:380" ph="{...}" />
-            <marker date="1517188372592" expanded="true" signature="395:581" ph="{...}" />
-            <marker date="1517188372592" expanded="true" signature="412:575" ph="[...]" />
-            <marker date="1517188372592" expanded="true" signature="426:565" ph="{&quot;loader&quot;: 'awesome-typescript-loader'...}" />
+            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/d3-axis/src/axis.js" />
-    <entry file="file://$PROJECT_DIR$/src/Util.coffee">
+    <entry file="file://$PROJECT_DIR$/src/view/Block.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.config.force.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding>
-            <marker date="1517188372592" expanded="true" signature="138:586" ph="{&quot;devtool&quot;: &quot;source-map&quot;...}" />
-            <marker date="1517188372592" expanded="true" signature="197:248" ph="{...}" />
-            <marker date="1517188372592" expanded="true" signature="263:329" ph="{&quot;path&quot;: BUILD_DIR...}" />
-            <marker date="1517188372592" expanded="true" signature="345:391" ph="{...}" />
-            <marker date="1517188372592" expanded="true" signature="406:583" ph="{...}" />
-            <marker date="1517188372592" expanded="true" signature="423:577" ph="[...]" />
-            <marker date="1517188372592" expanded="true" signature="437:567" ph="{&quot;loader&quot;: 'coffee-loader'...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/ForceBlock.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1755">
-          <caret line="135" column="30" lean-forward="false" selection-start-line="135" selection-start-column="12" selection-end-line="135" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13">
-          <caret line="1" column="5" lean-forward="true" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
+        <state relative-caret-position="130">
+          <caret line="112" column="42" lean-forward="false" selection-start-line="112" selection-start-column="4" selection-end-line="112" selection-end-column="42" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="541" column="63" lean-forward="false" selection-start-line="541" selection-start-column="63" selection-end-line="541" selection-end-column="63" />
+        <state relative-caret-position="1750">
+          <caret line="666" column="48" lean-forward="false" selection-start-line="666" selection-start-column="40" selection-end-line="666" selection-end-column="48" />
           <folding>
             <element signature="e#181#21621#0" expanded="false" />
             <element signature="e#21700#21914#0" expanded="false" />
@@ -733,66 +678,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.config.tree.js">
+    <entry file="file://$PROJECT_DIR$/src/force.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        <state relative-caret-position="574">
+          <caret line="82" column="23" lean-forward="false" selection-start-line="82" selection-start-column="23" selection-end-line="82" selection-end-column="23" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/coffeescript/lib/coffeescript/nodes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="609" column="30" lean-forward="true" selection-start-line="609" selection-start-column="30" selection-end-line="609" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tree.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="18" column="42" lean-forward="false" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
-          <folding>
-            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/force.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="477" column="40" lean-forward="false" selection-start-line="477" selection-start-column="40" selection-end-line="477" selection-end-column="40" />
-          <folding>
-            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tree.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="655">
-          <caret line="84" column="30" lean-forward="true" selection-start-line="84" selection-start-column="30" selection-end-line="84" selection-end-column="30" />
+        <state relative-caret-position="13">
+          <caret line="1" column="28" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/Block.coffee">
+    <entry file="file://$PROJECT_DIR$/force.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+        <state relative-caret-position="117">
+          <caret line="474" column="24" lean-forward="false" selection-start-line="474" selection-start-column="24" selection-end-line="474" selection-end-column="24" />
+          <folding>
+            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/ForceBlock.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="455">
+          <caret line="111" column="0" lean-forward="false" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/force.coffee">
+    <entry file="file://$PROJECT_DIR$/src/Util.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="31" column="75" lean-forward="true" selection-start-line="31" selection-start-column="75" selection-end-line="31" selection-end-column="75" />
+        <state relative-caret-position="299">
+          <caret line="23" column="17" lean-forward="false" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
           <folding />
         </state>
       </provider>

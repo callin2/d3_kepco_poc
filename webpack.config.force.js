@@ -7,7 +7,7 @@ var config = {
     devtool: "source-map",
     target: "web",
     entry: {
-        "tree": [APP_DIR + '/force.coffee']
+        "force": [APP_DIR + '/force.coffee']
     },
 
     output: {
