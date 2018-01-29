@@ -6,6 +6,7 @@
       </sourceFilesUrls>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/src/tree.js" />
       <root url="file://$PROJECT_DIR$/webpack.config.js" />
     </CLASSES>
     <SOURCES />

@@ -42,6 +42,14 @@
             return zero + n;
         }
 
+        function cardChange() {
+            console.dir(window.event.target, this)
+            // let cardChange = document.getElementById('dataType')
+            window.event.target.classList.toggle('on');
+            window.event.target.parentElement.classList.toggle('on');
+            // cardChange.classList.toggle('on');
+        }
+
     </script>
     <style>
         svg {
@@ -354,31 +362,129 @@
 
         /*---------------------------------------------------------*/
 
+        .dataType.card {
+            background-color: #8284d7;
+            width: 48px;
+            height: 48px;
+            /*position: absolute;*/
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            margin: auto;
+            padding: 0 .3rem;
+            overflow: hidden;
+            border-radius: 50%;
+            box-shadow: none;
+            box-sizing: border-box;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
+            -webkit-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
+            -moz-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
+            -o-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
+        }
+
+        .dataType.card .card-block {
+            padding: 0;
+        }
+
+        .dataType.card .card-header {
+            padding: 0;
+            font-size: 1.6rem;
+            color: #585858;
+        }
+
+        .dataType.card .card-title,
+        .dataType.card .card-content {
+            width: 89px;
+            display: none;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 3s cubic-bezier(.5, .2, .2, 1.1);
+        }
+
+        /* 하단은 이미지와 관련된 css 입니다. */
+
+        .dataType.card .dataType-image {
+            width: 100%;
+            min-width: 36px;
+            max-width: 36px;
+            height: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: .225rem;
+            font-family: FontAwesome;
+            /*border: 1px solid #ccc;*/
+        }
+
+        .dataType.card .dataType-image img {
+            width: 80%;
+        }
+
+        /* .on 을 삽입시 변경되는 css 입니다. */
+
+        .dataType.on {
+            background-color: #fff;
+            width: 155px;
+            border-radius: .225rem;
+            border: 1px solid #ccc;
+        }
+
+        .dataType.on .card-title,
+        .dataType.on .card-content {
+            display: block;
+        }
+
+
+        /*---------------------------------------------------------*/
+
         .realTime-table .card-block {
             height: 246px;
             overflow-y: scroll;
         }
 
+
+
     </style>
 
     <!--for svg-->
     <!--<style>-->
-        <!--.axis line {-->
-            <!--stroke: #8284d7;-->
-        <!--}-->
+    <!--.axis line {-->
+    <!--stroke: #8284d7;-->
+    <!--}-->
     <!--</style>-->
 </head>
 <body onload="realtimeClock()">
 <svg viewBox="-300 -500 800 800" >
     <defs>
         <filter id="drop-shadow" x="-40%" y="-40%" width="200%" height="200%">
-        <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"></feGaussianBlur>
-        <feOffset in="blur" dx="3" dy="3" result="offsetBlur"></feOffset>
-        <feMerge><feMergeNode in="offsetBlur"></feMergeNode>
-            <feMergeNode in="SourceGraphic"></feMergeNode>
-        </feMerge>
+            <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"></feGaussianBlur>
+            <feOffset in="blur" dx="3" dy="3" result="offsetBlur"></feOffset>
+            <feMerge><feMergeNode in="offsetBlur"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
         </filter>
     </defs>
+
+    <foreignobject x="-50" y="-25" width="100" height="50" id="citem">
+        <div class="card card-flex dataType" onclick="cardChange()" id="dataType">
+            <div class="card-block dataType-image">
+                &#xf0e7;
+                <img src="" alt=""></div>
+            <div class="card-block">
+                <div class="card-title">
+                    <strong>Elliot Fu</strong>
+                </div>
+                <div class="card-content">
+                    <small>Friiends of Veronika</small>
+                </div>
+            </div>
+        </div>
+    </foreignobject>
+
     <!--<text>&#xf0ce;</text>-->
 </svg>
 
@@ -560,6 +666,6 @@
 
 </div>
 
-<script src="./dist/app.dev.js" ></script>
+<script src="./dist/force.dev.js" ></script>
 </body>
 </html>

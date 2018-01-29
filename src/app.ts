@@ -1,9 +1,9 @@
 import * as d3 from "d3"
 import * as most from "most"
+import * as _ from "lodash"
+import {cons} from "@most/prelude";
 
 let blockList = []
-let node = []
-let link = []
 
 const timeRange = 60*1000
 const station = [
@@ -457,7 +457,7 @@ const station = [
     { name:'제주시 카카오 본사', charger:'AC완속'},
     { name:'제주시 카카오 본사', charger:'AC완속'},
     { name:'제주시 카카오 본사', charger:'AC완속'}
-].map((v,idx)=>{ v['id']=idx; return v })
+].map((v,idx)=>{ v['id']='st_'+idx; return v })
 const charger = []
 const ecar = [
     {carType: '아이오닉'},
@@ -472,27 +472,32 @@ const ecar = [
 ];
 
 
-let blockIdx=0;
-let forceSim = d3.forceSimulation()
-    .force(
-        "link",
-        d3.forceLink().id(function(d) {
-            return d.id;
-        })
-    ).force(
-        "charge",
-        d3.forceManyBody().strength(100)
-    )
-
-function dummyStationGen() {
-    let cnt = Math.floor(Math.random()*10 ) + 3
+function dummyCarsGen() {
+    let cnt = Math.floor(Math.random()*10 ) + 2
     let rslt = []
     for(let i=0;i<cnt;i++) {
-        rslt.push(station[Math.floor(Math.random()*100)])
+        let car = _.cloneDeep(ecar[Math.floor(Math.random()*9)])
+        car.id='car_' + i
+        rslt.push(car)
     }
     return rslt
 }
 
+function dummyStationGen() {
+    let cnt = Math.floor(Math.random()*4 ) + 2
+    let rslt = []
+    for(let i=0;i<cnt;i++) {
+        let st = _.cloneDeep(station[Math.floor(Math.random()*100)])
+        st.id='stt_' + i
+
+        st._cars = dummyCarsGen()
+
+        rslt.push(st)
+    }
+    return rslt
+}
+
+let blockIdx=0;
 function dummyDataGen() {
     let n = Date.now()
     blockIdx++
@@ -501,7 +506,9 @@ function dummyDataGen() {
 
 let svg = d3.select('svg')
 
-let timeScale = d3.scaleTime().domain([Date.now(), Date.now()-(timeRange)]).range([-500,500])
+let begin = Date.now()+1000
+
+let timeScale = d3.scaleTime().domain([begin, begin-timeRange]).range([-500,500])
 let yAxis = d3.axisLeft(timeScale)
 
 let yaxisG = svg.append('g')
@@ -510,8 +517,6 @@ let yaxisG = svg.append('g')
 
 yaxisG.selectAll('path').style('stroke','#8284d7');
 
-let blockG = svg.append('g')
-    .attr('class', 'block')
 
 const $log = r=>console.log('tap',JSON.stringify(r))
 
@@ -519,46 +524,107 @@ const updateBlockList = r=>{
     let n = Date.now()
     // blockList = blockList.filter(b=> n-b.timestamp > timeRange )
     blockList.push(r)
-    node.push(r)
-    r.stations.forEachChild(s=>{
-        link.push({source: r.id, target:})
-    })
-}
+    // r.links = []
+
+    // r.fixed = true;
+    r.fx=0
+    r.fy=0
+
+    let forceLink = d3.forceLink()
+        .distance(d=>120)
+        .id(d=>d.id);
+
+    r.forceLayoutInfo = {
+        node : [],
+        link : [],
+        forceSim : d3.forceSimulation()
+            .force('colide', d3.forceCollide(15))
+            .force("charge", d3.forceManyBody().strength(-100))
+            .force("link", forceLink)
+            .force("x", d3.forceX( ()=> r.id%2 ? 100 : -100  ))
+            .force("y", d3.forceY())
+            .alphaTarget(1),
+        forceLink: forceLink
+    }
+    r.forceLayoutInfo.node.push(r)
+    r.stations.forEach(s=>{
+        let l = {source: r.id, target:s.id};
+        r.forceLayoutInfo.link.push(l)
+        // r.links.push(l)
+        r.forceLayoutInfo.node.push(s)
+    });
+    // r.forceLayoutInfo.forceSim.stop()
+    console.log((r.forceLayoutInfo.node))
+    console.log((r.forceLayoutInfo.link))
+    console.log(';;;;;;;;;;;')
+
+    r.forceLayoutInfo.forceSim.nodes(r.forceLayoutInfo.node)
+    r.forceLayoutInfo.forceLink.links(r.forceLayoutInfo.link)
+    // r.forceLayoutInfo.forceSim.alpha(1).restart()
+};
+
+
+    // forceSim.on('tick',(e)=>{
+    //     svg.selectAll('circle.station')
+    //         .attr('cx', d=>d.x)
+    //         .attr('cy', d=>d.y)
+    //
+    //     svg.selectAll('g.ablock line')
+    //         .attr('x2',d=>d.target.x)
+    //         .attr('y2',d=>d.target.y)
+    // });
+
 
 most.periodic(5*1000)
+// most.of(1)
     .map(dummyDataGen)
-    .tap($log)
+    // .tap($log)
     .tap(updateBlockList)
     .observe(r=> {
+        animate()
+    })
 
+
+most.periodic(5*1000)
+    .delay(30*1000)
+    .observe(()=>{
+        blockList.shift()
     })
 
 let _stations = context => {
     let selection = context.selection ? context.selection() : context
 
     selection
-        .attr('cx', d=>Math.random()*100-50)
-        .attr('cy', d=>Math.random()*100-50)
+        // .attr('cx', d=>d.x)
+        // .attr('cy', d=>d.y)
         .attr('r', 10)
-        .style('fill', 'pink')
+        .style('fill', 'red')
+        .style("filter", "url(#drop-shadow)")
 };
 
 
 let _blocks = (data => context => {
-    console.log('_blocks', data)
+
+    console.info('data length', data.length)
+
     let selection = context.selection ? context.selection() : context
     let block_g = selection.selectAll('g.ablock').data(data, d=>d.blockIdx).order()
+
+    console.log('block_g', block_g.size())
+
     let block_g_exit = block_g.exit()
     let block_g_enter = block_g.enter()
         .append("g")
         .attr("class", "ablock")
-        .attr('transform', d=>`translate(0 ${timeScale(d.timestamp+1000)})`)
+        .attr('transform', d=>`translate(0 ${timeScale(d.timestamp)})`)
+
+
+
 
     let blockCircle = block_g.select('circle')
+    let blockLine = block_g.select('line')
 
     block_g = block_g.merge(block_g_enter);
-
-
 
     blockCircle = blockCircle.merge(block_g_enter).append('circle')
         .attr('cx', 0)
@@ -568,49 +634,100 @@ let _blocks = (data => context => {
         .transition()
         .duration(100)
         .attr('r', 3)
-        .style('fill', '#8284d7')
+        .style('fill', '#8284d7');
+
+
 
     let stations = block_g_enter.selectAll('circle.station').data(d=>{
-        console.log('ddd========', d.stations)
+        // console.log('ddd========', d.stations)
         return d.stations
     }).enter()
         .append('circle')
         .attr('class','station')
         .call(_stations)
 
+    let linktostation = block_g_enter.selectAll('line').data(d=>d.forceLayoutInfo.link)
+        .enter().append('line')
+        .attr('x1', 0)
+        .attr('y1', 0)
+        .attr('x2', d=>Math.random()*100)
+        .attr('y2', d=>Math.random()*100)
+        .style('stroke','#8e90db')
+
     if (context !== selection) {
         block_g = block_g.transition(context);
     }
 
-    block_g.attr('transform', d=>`translate(0 ${timeScale(d.timestamp)})`)
+    block_g.attr('transform', d=>`translate(0 ${timeScale(d.timestamp-5000)})`);
 
-    block_g_exit.remove()
+    if(block_g_exit.size() > 0) {
+        block_g_exit.call((sel) => {
+            console.log(sel.datum())
+
+            sel.datum().forceLayoutInfo.forceSim.stop()
+            sel.datum().forceLayoutInfo.node = null
+            sel.datum().forceLayoutInfo.link = null
+        })
+
+        block_g_exit.remove()
+    }
+
+    console.log('block_g_enter', block_g_enter.size())
+    if(block_g_enter.size() > 0) {
+        block_g_enter.call(sel=>{
+
+
+            // console.info(sel)
+            // console.info(sel.datum())
+            sel.datum().forceLayoutInfo.forceSim.on('tick',()=>{
+                sel.selectAll('circle.station')
+                    .attr('cx', d=>d.x)
+                    .attr('cy', d=>d.y)
+
+                sel.selectAll('g.ablock line')
+                    .attr('x2',d=>{
+                        if(!d.target) return 0;
+                        return d.target.x
+                    })
+                    .attr('y2',d=>{
+                        if(!d.target) return 0;
+                        return d.target.y
+                    })
+            })
+        })
+    }
 
 })(blockList);
 
+let blockG = svg.append('g')
+    .attr('class', 'block')
+    .call(_blocks);
 
+console.log('---------------')
 
-function animate(ts?){
+function animate(){
     let now = Date.now()
-    timeScale.domain([now, now-(timeRange)])
+    timeScale.domain([now+1000, now-timeRange+1000])
 
     yaxisG.transition()
-        .duration(1000)
+        .duration(5000)
         .ease(d3.easeLinear)
         .call(yAxis);
 
     //-----------------
 
     blockG.transition()
-        .duration(1000)
+        .duration(5000)
         .ease(d3.easeLinear)
         .call(_blocks);
+
+    // blockG.call(_blocks);
 
 }
 
 
 
-setInterval(animate,1000)
+// setInterval(animate,1000)
 
 //
 //
