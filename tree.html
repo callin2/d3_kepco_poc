@@ -42,6 +42,50 @@
             return zero + n;
         }
 
+        // icon clickevent animation 내일 중으로 간략하게 작성하겠습니다. 
+
+        function infoBlockChange() {
+            let infoBlock = document.getElementById("infoBlockChange");
+            let infoCar = document.getElementById("infoCarChange");
+            let infoStation = document.getElementById("infoStationChange");
+
+            infoBlock.classList.toggle('show'); 
+
+            if(infoBlock.classList.contains('show')) { 
+                infoCar.classList.remove('show'); 
+                infoStation.classList.remove('show'); 
+            }     
+        }
+
+        function infoCarChange() {
+            let infoBlock = document.getElementById("infoBlockChange");
+            let infoCar = document.getElementById("infoCarChange");
+            let infoStation = document.getElementById("infoStationChange");
+
+            infoCar.classList.toggle('show'); 
+
+            if(infoCar.classList.contains('show')) {
+                infoBlock.classList.remove('show');
+                infoStation.classList.remove('show'); 
+            }      
+        }
+
+        function infoCarStation() {
+            let infoBlock = document.getElementById("infoBlockChange");
+            let infoCar = document.getElementById("infoCarChange");
+            let infoStation = document.getElementById("infoStationChange");
+
+            infoStation.classList.toggle('show'); 
+
+            if(infoStation.classList.contains('show')) {
+                infoBlock.classList.remove('show');
+                infoCar.classList.remove('show'); 
+            }  
+
+        }
+
+        // node clickevent animation 노드를 클릭시 클래스를 추가하는 함수입니다. 
+
         function cardChange() {
             console.dir(window.event.target, this)
             // let cardChange = document.getElementById('dataType')
@@ -52,6 +96,7 @@
 
     </script>
     <style>
+
         svg {
             position: absolute;
             box-sizing: border-box;
@@ -59,9 +104,11 @@
             height:100%;
             width: 100%;
         }
+
         svg text {
             font-family: FontAwesome;
         }
+
         html, body {
             background-color: #eee;
             width: 100%;
@@ -103,6 +150,11 @@
             padding: 0;
         }
 
+        .flex-column { 
+            flex-direction: column; 
+            align-items: flex-start !important; 
+        }
+
         .align-right {
             text-align: right;
         }
@@ -122,6 +174,7 @@
         /*---------------------------------------------------------*/
 
         .card {
+            background: #fff; 
             margin: 1rem 0;
             box-sizing: border-box;
             border: 1px solid #8284d7;
@@ -138,11 +191,12 @@
 
         .card-header {
             padding: .8rem 1rem;
+            letter-spacing: .03rem; 
             font-weight: 700;
             font-size: .855rem;
         }
 
-        .card-block {
+        .card-block {            
             padding: 0 1rem;
             color: #383838;
         }
@@ -162,6 +216,10 @@
         }
 
         .card-title {
+            max-width: 220px; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
             font-size: .8rem;
         }
 
@@ -364,20 +422,15 @@
 
         .dataType.card {
             background-color: #8284d7;
-            width: 48px;
-            height: 48px;
+            width: 30px;
+            height: 30px;
             /*position: absolute;*/
             top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            margin: auto;
-            padding: 0 .3rem;
+            bottom: 0;                
             overflow: hidden;
             border-radius: 50%;
             box-shadow: none;
             box-sizing: border-box;
-            font-size: 0.8rem;
             cursor: pointer;
             transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
             -webkit-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
@@ -397,11 +450,12 @@
 
         .dataType.card .card-title,
         .dataType.card .card-content {
-            width: 89px;
+            width: 80px;
             display: none;
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
+            font-size: .3rem; 
             transition: all 3s cubic-bezier(.5, .2, .2, 1.1);
         }
 
@@ -409,28 +463,52 @@
 
         .dataType.card .dataType-image {
             width: 100%;
-            min-width: 36px;
-            max-width: 36px;
-            height: 36px;
+            min-width: 30px;
+            max-width: 30px;
+            height: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
             border-radius: .225rem;
             font-family: FontAwesome;
+            text-align: center; 
             /*border: 1px solid #ccc;*/
         }
 
         .dataType.card .dataType-image img {
             width: 80%;
+            display: none; 
         }
+
+        /* --------------------------------------------------------- 스크롤제어 css  */
+
+        .realTime-table .card-block, 
+        .info-box-card .card-block {
+            max-height: 246px;
+            overflow-y: auto;
+        }
+
+        .info-box-card.card {
+            width: 290px;  
+            position: absolute; 
+            left: -350px; 
+
+            transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
+            -webkit-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
+            -moz-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
+            -o-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
+        }
+
+        /* --------------------------------------------------------- 애니메이션 css  */
 
         /* .on 을 삽입시 변경되는 css 입니다. */
 
         .dataType.on {
             background-color: #fff;
-            width: 155px;
+            width: 125px;
+            padding: 0 .25rem; 
             border-radius: .225rem;
-            border: 1px solid #ccc;
+            border: .03rem solid #ccc;
         }
 
         .dataType.on .card-title,
@@ -438,12 +516,12 @@
             display: block;
         }
 
+        /* .show 를 삽입시 변경되는 css 입니다. */
 
-        /*---------------------------------------------------------*/
-
-        .realTime-table .card-block {
-            height: 246px;
-            overflow-y: scroll;
+        #infoBlockChange.show,
+        #infoCarChange.show,
+        #infoStationChange.show {
+            left: 0;  
         }
 
 
@@ -469,6 +547,13 @@
         </filter>
     </defs>
 
+
+    <!-- 
+        현재 이미지는 display: none으로 설정해놓은 상태이기 때문에 
+        이미지를 사용할 경우 480줄의 display:none을 block 으로 변경하시면 됩니다. 
+    -->
+
+
     <foreignobject x="-50" y="-25" width="100" height="50" id="citem">
         <div class="card card-flex dataType" onclick="cardChange()" id="dataType">
             <div class="card-block dataType-image">
@@ -490,16 +575,78 @@
 
 
 <div class="box box-top-left">
+
+    <!-- 상단 아이콘 묶음 -->
+
     <ul class="flex btn-group">
-        <li><a class="btn btn-icon"><i class="fa fa-cube" aria-hidden="true"></i></a></li>
-        <li><a class="btn btn-icon"><i class="fa fa-car" aria-hidden="true"></i></a></li>
-        <li><a class="btn btn-icon"><i class="fa fa-bolt" aria-hidden="true"></i></a></li>
+        <li><a class="btn btn-icon" onclick="infoBlockChange()"><i class="fa fa-cube" aria-hidden="true"></i></a></li>
+        <li><a class="btn btn-icon" onclick="infoCarChange()"><i class="fa fa-car" aria-hidden="true"></i></a></li>
+        <li><a class="btn btn-icon" onclick="infoCarStation()"><i class="fa fa-bolt" aria-hidden="true"></i></a></li>
         <li>
             <form name="rtcForm">
                 <input type="text" name="rtcInput" size="20" readonly="readonly" />
             </form>
         </li>
     </ul>
+
+    <!-- 
+        600~648은 상단 아이콘을 클릭하면 나타나는 데이터정보로써 
+        각각 최대 5개의 데이터만 보이도록 설정을 해놨습니다. 
+        javascript은 47번부터~
+    -->
+
+    <!-- 접속한 이후부터 현재까지 볼 수 있는 block 정보 -->
+
+    <div class="card info-box-card" id="infoBlockChange">
+        <div class="card-header color-main">Block INFO</div>
+
+        <!-- Block 정보 나열하는 부분 -->
+
+        <div class="card-block"> 
+
+            <div class="card-flex">
+                <div class="card-title flex flex-column"><strong>Block12345</strong> <small>2018.01.18 PM16:02</small></div>
+                <div class="card-content"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+            </div>
+
+            <div class="card-flex">
+                <div class="card-title flex flex-column"><strong>Block12345</strong> <small>2018.01.18 PM16:02</small></div>
+                <div class="card-content"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 접속한 이후부터 현재까지 볼 수 있는 전기차 및 유저 정보 -->
+
+    <div class="card info-box-card" id="infoCarChange">
+        <div class="card-header color-main">Electric Car INFO</div>
+
+        <!-- Car 정보 나열하는 부분 -->
+
+        <div class="card-block">
+            <div class="card-flex">
+                <div class="card-title"><strong>K3</strong> <small>HONG KIL DONG</small></div>
+                <div class="card-content"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 접속한 이후부터 현재까지 볼 수 있는 충전소 정보 -->
+
+    <div class="card info-box-card" id="infoStationChange">
+        <div class="card-header color-main">Chargin Station INFO</div>
+
+        <!-- Station 정보 나열하는 부분 -->
+
+        <div class="card-block">
+            <div class="card-flex">
+                <div class="card-title"><strong>JEJU</strong> <small>10, Sinjeongjungang-ro 10-gil, Yangcheon-gu, Seoul, Republic of Korea</small></div>
+                <div class="card-content"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div class="box box-bottom-left">
