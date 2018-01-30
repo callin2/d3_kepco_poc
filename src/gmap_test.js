@@ -8,7 +8,8 @@ var D3Overlay;
 var evehicles;
 var activeCharger;
 var map;
-var image = './asset/image/map-marker-icon.png';
+var image = './asset/image/map-marker-icon2.png';
+var imageAggr = './asset/image/map-marker-icon.png';
 var polyLines = [];
 var subNodeOverlay;
 var projection;
@@ -65,14 +66,14 @@ function initMap() {
     map.addListener('zoom_changed', handleZoomChange)
     addControl();
 
-    Promise.all([
-        getStations(),
-        getEchargers(),
-        getEVehicle()
-    ]).then(([stations, chargers, vehicles])=>{
-        console.log('stations, chargers, vehicles', stations, chargers, vehicles)
-        stations.forEach(addStationMarker)
-    });
+    // Promise.all([
+    //     getStations(),
+    //     getEchargers(),
+    //     getEVehicle()
+    // ]).then(([stations, chargers, vehicles])=>{
+    //     // console.log('stations, chargers, vehicles', stations, chargers, vehicles)
+    //     stations.forEach(addStationMarker)
+    // });
 
     $('#recentEvents').remove()
     Promise.all([
@@ -82,6 +83,8 @@ function initMap() {
     ]).then(([stations,charges,vehicles])=>{
         var resultArray = new Array();
         var resultJson = new Object();
+
+        stations.forEach(addStationMarker)
 
         // 충전거래 데이터 생성
         d3.interval(function() {
@@ -99,7 +102,7 @@ function initMap() {
 			
 			// 충전 중 - 충전 완료 데이터 생성
             resultArray = to_json(date,stations,charges,vehicles);
-            console.log('TO_JSON Interval Result Array', resultArray);
+            // console.log('TO_JSON Interval Result Array', resultArray);
             // 결과값 생성
 			resultArray.forEach(addToRankControl);
 			
@@ -112,7 +115,7 @@ function initMap() {
                 b.charging_end_time = date.getFullYear()+'-'+numberFormat(date.getMonth())+'-'+numberFormat(date.getDate())+' '+
                     numberFormat(date.getHours())+':'+numberFormat(date.getMinutes())+':'+numberFormat(date.getSeconds());
 
-				console.log('setTimeout result',b);	
+				// console.log('setTimeout result',b);
 				return b;
             },stations,charges,vehicles));
 			
@@ -125,7 +128,7 @@ function initMap() {
     $('#recentEvents').on('click',(evt)=>{
 		alert();
         var sid = $(evt.target).parents('tr').data('stationid')
-        console.log('sid', sid)
+        // console.log('sid', sid)
         var stn = getStation(sid)
 
         // map.setCenter({lat: stn.ESTATION_LOC_LONGITUDE, lng: stn.ESTATION_LOC_LATITUDE})
@@ -260,12 +263,17 @@ function showInfo(station, marker) {
         infowindow.close()
     }
 
+    var tmpl = echargers.filter((v)=>v.ECHARE_STATION_ID == station.ECHARE_STATION_ID).map(v=>
+        `<li>${v.ECHARGER_ID}(${v.ECHARGER_CONNECTOR_TYPE})  <a href="#" class="button button-sm button-diabled"><i class="fa fa-plug"></i></a></li>`
+    )
+
+
     var contentString = '<div id="content">' +
-        '<h2 class="title">tSTA0001 충전기 현황<br/><small><i class="fa fa-map-marker"></i> 제주시 노형동 중앙초등학교점</small></h2>' +
-        '<ul>' +
-        '   <li>충전기 A  <a href="#" class="button button-sm"><i class="fa fa-plug"></i></a> </li>' +
-        '   <li>충전기 B  <a href="#" class="button button-sm button-diabled"><i class="fa fa-plug"></i></a></li>' +
-        '   <li>충전기 C  <a href="#" class="button button-sm button-diabled"><i class="fa fa-plug"></i></a></li>' +
+        `<h2 class="title">${station.name} 충전기 현황<br/><small><i class="fa fa-map-marker"></i> ${station.addr}</small></h2>`+
+        '<ul>' + tmpl.join('')
+        // '   <li>충전기 A  <a href="#" class="button button-sm"><i class="fa fa-plug"></i></a> </li>' +
+        // '   <li>충전기 B  <a href="#" class="button button-sm button-diabled"><i class="fa fa-plug"></i></a></li>' +
+        // '   <li>충전기 C  <a href="#" class="button button-sm button-diabled"><i class="fa fa-plug"></i></a></li>' +
         '</ul>' +
 
         '</div>';
@@ -284,7 +292,7 @@ function addStationMarker(s) {
         // label: ''+s.NUM_ECHARGER,
         animation: google.maps.Animation.DROP,
         map: map,
-        icon: image,
+        icon: s.PEER_TYPE == 'aggrePeer' ?  imageAggr : image,
     });
 
     marker.addListener('click', handleMarkerClick);
@@ -292,51 +300,239 @@ function addStationMarker(s) {
 }
 
 function getBusyStation(limit) {
-    return fetch('https://gist.githubusercontent.com/jhs9396/13dee5bf7ca8a94e98fa350dfff9d8bc/raw/7f5b7d15d97ab15ed7c5258ceafbac3975a2934f/station_temp.txt')
-        .then(function(response) {
-            return response.json()
-        }).then(function(json) {
-            console.log('parsed json', json)
-            return stations = json.station
-        }).catch(function(ex) {
-            console.log('parsing failed', ex)
-        });
+    // return fetch('https://gist.githubusercontent.com/jhs9396/13dee5bf7ca8a94e98fa350dfff9d8bc/raw/7f5b7d15d97ab15ed7c5258ceafbac3975a2934f/station_temp.txt')
+    //     .then(function(response) {
+    //         return response.json()
+    //     }).then(function(json) {
+    //         console.log('parsed json', json)
+    //         return stations = json.station
+    //     }).catch(function(ex) {
+    //         console.log('parsing failed', ex)
+    //     });
+
+    Promise.resolve([
+            {"ECHARE_STATION_ID":"tSTA0001","ESTATION_LOC_LATITUDE":34.995541,"ESTATION_LOC_LONGITUDE":126.708152,"NUM_ECHARGER":1,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0002","tSTA0003","tSTA0004","tSTA0005","tSTA0006"]},
+            {"ECHARE_STATION_ID":"tSTA0002","ESTATION_LOC_LATITUDE":34.995793,"ESTATION_LOC_LONGITUDE":126.720037,"NUM_ECHARGER":2,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0001","tSTA0003","tSTA0005","tSTA0007"]},
+            {"ECHARE_STATION_ID":"tSTA0003","ESTATION_LOC_LATITUDE":35.025341,"ESTATION_LOC_LONGITUDE":126.713062,"NUM_ECHARGER":3,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0001","tSTA0002","tSTA0010","tSTA0015"]},
+            {"ECHARE_STATION_ID":"tSTA0004","ESTATION_LOC_LATITUDE":35.028351,"ESTATION_LOC_LONGITUDE":126.714340,"NUM_ECHARGER":4,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0001","tSTA0008","tSTA0009","tSTA0010","tSTA0011"]},
+            {"ECHARE_STATION_ID":"tSTA0005","ESTATION_LOC_LATITUDE":35.029079,"ESTATION_LOC_LONGITUDE":126.725340,"NUM_ECHARGER":5,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0001","tSTA0002"]},
+            {"ECHARE_STATION_ID":"tSTA0006","ESTATION_LOC_LATITUDE":35.042165,"ESTATION_LOC_LONGITUDE":126.716205,"NUM_ECHARGER":1,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0001","tSTA0012","tSTA0013"]},
+            {"ECHARE_STATION_ID":"tSTA0007","ESTATION_LOC_LATITUDE":35.020839,"ESTATION_LOC_LONGITUDE":126.781584,"NUM_ECHARGER":2,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0002","tSTA0014"]},
+            {"ECHARE_STATION_ID":"tSTA0008","ESTATION_LOC_LATITUDE":35.023886,"ESTATION_LOC_LONGITUDE":126.785650,"NUM_ECHARGER":3,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0004"]},
+            {"ECHARE_STATION_ID":"tSTA0009","ESTATION_LOC_LATITUDE":34.983464,"ESTATION_LOC_LONGITUDE":126.685057,"NUM_ECHARGER":4,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0004"]},
+            {"ECHARE_STATION_ID":"tSTA0010","ESTATION_LOC_LATITUDE":34.976902,"ESTATION_LOC_LONGITUDE":126.678130,"NUM_ECHARGER":5,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0003","tSTA0004"]},
+            {"ECHARE_STATION_ID":"tSTA0011","ESTATION_LOC_LATITUDE":34.989929,"ESTATION_LOC_LONGITUDE":126.779338,"NUM_ECHARGER":1,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0004"]},
+            {"ECHARE_STATION_ID":"tSTA0012","ESTATION_LOC_LATITUDE":35.000918,"ESTATION_LOC_LONGITUDE":126.802599,"NUM_ECHARGER":2,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0006"]},
+            {"ECHARE_STATION_ID":"tSTA0013","ESTATION_LOC_LATITUDE":34.913115,"ESTATION_LOC_LONGITUDE":126.657689,"NUM_ECHARGER":3,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0006"]},
+            {"ECHARE_STATION_ID":"tSTA0014","ESTATION_LOC_LATITUDE":34.956448,"ESTATION_LOC_LONGITUDE":126.782025,"NUM_ECHARGER":4,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0007"]},
+            {"ECHARE_STATION_ID":"tSTA0015","ESTATION_LOC_LATITUDE":35.044207,"ESTATION_LOC_LONGITUDE":126.847201,"NUM_ECHARGER":5,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0003"]}
+    ])
 }
 
 function getStations() {
-    return fetch('https://gist.githubusercontent.com/jhs9396/13dee5bf7ca8a94e98fa350dfff9d8bc/raw/7f5b7d15d97ab15ed7c5258ceafbac3975a2934f/station_temp.txt')
-        .then(function(response) {
-            return response.json()
-        }).then(function(json) {
-            // console.log('parsed json', json)
-            return stations = json.station
-        }).catch(function(ex) {
-            console.log('parsing failed', ex)
-        });
+    // return fetch('https://gist.githubusercontent.com/jhs9396/13dee5bf7ca8a94e98fa350dfff9d8bc/raw/7f5b7d15d97ab15ed7c5258ceafbac3975a2934f/station_temp.txt')
+    //     .then(function(response) {
+    //         return response.json()
+    //     }).then(function(json) {
+    //         // console.log('parsed json', json)
+    //         return stations = json.station
+    //     }).catch(function(ex) {
+    //         console.log('parsing failed', ex)
+    //     });
+    return Promise.resolve(stations = [
+            {"ECHARE_STATION_ID":"tSTA0001", "addr":"전라남도 나주시 빛가람로 719 ", "name": "빛가람동주민센터", "chargerType": "AC완속", "ESTATION_LOC_LATITUDE":34.995541,"ESTATION_LOC_LONGITUDE":126.708152,"NUM_ECHARGER":1,"PEER_TYPE":"aggrePeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0005","tSTA0010","tSTA0014"]},
+            {"ECHARE_STATION_ID":"tSTA0002", "addr":"전라남도 나주시 토계길 61 ", "name": "송월동주민센터", "chargerType": "AC완속", "ESTATION_LOC_LATITUDE":34.995793,"ESTATION_LOC_LONGITUDE":126.720037,"NUM_ECHARGER":2,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":[]},
+            {"ECHARE_STATION_ID":"tSTA0003", "addr":"전라남도 나주시 성북2길 6 ", "name": "성북동주민센터", "chargerType": "AC완속", "ESTATION_LOC_LATITUDE":35.025341,"ESTATION_LOC_LONGITUDE":126.713062,"NUM_ECHARGER":3,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":[]},
+            {"ECHARE_STATION_ID":"tSTA0004", "addr":"전라남도 나주시 영산포로182-7 ", "name": "이창동주민센터", "chargerType": "AC완속", "ESTATION_LOC_LATITUDE":35.028351,"ESTATION_LOC_LONGITUDE":126.714340,"NUM_ECHARGER":4,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":[]},
+            {"ECHARE_STATION_ID":"tSTA0005", "addr":"전라남도 나주시 나주역길 56 ", "name": "나주역(KTX)", "chargerType": "AC완속", "ESTATION_LOC_LATITUDE":35.029079,"ESTATION_LOC_LONGITUDE":126.725340,"NUM_ECHARGER":5,"PEER_TYPE":"aggrePeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0001","tSTA0010","tSTA0014"]},
+            {"ECHARE_STATION_ID":"tSTA0006", "addr":"전라남도 나주시 나주역길 56 ", "name": "나주역(KTX)", "chargerType": "AC완속", "ESTATION_LOC_LATITUDE":35.042165,"ESTATION_LOC_LONGITUDE":126.716205,"NUM_ECHARGER":1,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":[]},
+            {"ECHARE_STATION_ID":"tSTA0007", "addr":"전라남도 나주시 왕건길 53 ", "name": "나주지사", "chargerType": "DC차데모+AC3상+DC콤보", "ESTATION_LOC_LATITUDE":35.020839,"ESTATION_LOC_LONGITUDE":126.781584,"NUM_ECHARGER":2,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":[]},
+            {"ECHARE_STATION_ID":"tSTA0008", "addr":"전라남도 나주시 왕건길 53 ", "name": "나주지사", "chargerType": "DC차데모+AC3상+DC콤보", "ESTATION_LOC_LATITUDE":35.023886,"ESTATION_LOC_LONGITUDE":126.785650,"NUM_ECHARGER":3,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":[]},
+            {"ECHARE_STATION_ID":"tSTA0009", "addr":"전라남도 나주시 전력로 55 ", "name": "한전본사 남측주차장", "chargerType": "DC차데모+AC3상", "ESTATION_LOC_LATITUDE":34.983464,"ESTATION_LOC_LONGITUDE":126.685057,"NUM_ECHARGER":4,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":[]},
+            {"ECHARE_STATION_ID":"tSTA0010", "addr":"전라남도 나주시 전력로 55 ", "name": "한전본사 파빌리온주차장", "chargerType": "DC차데모+AC3상+DC콤보", "ESTATION_LOC_LATITUDE":34.976902,"ESTATION_LOC_LONGITUDE":126.678130,"NUM_ECHARGER":5,"PEER_TYPE":"aggrePeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0005","tSTA0001","tSTA0014"]},
+            {"ECHARE_STATION_ID":"tSTA0011", "addr":"전라남도 나주시 송월동 100 ", "name": "나주시청", "chargerType": "DC차데모+AC3상+DC콤보", "ESTATION_LOC_LATITUDE":34.989929,"ESTATION_LOC_LONGITUDE":126.779338,"NUM_ECHARGER":1,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":[]},
+            {"ECHARE_STATION_ID":"tSTA0012", "addr":"전라남도 나주시 성북동 145-4 ", "name": "성북동 주민센터", "chargerType": "DC차데모+AC3상+DC콤보", "ESTATION_LOC_LATITUDE":35.000918,"ESTATION_LOC_LONGITUDE":126.802599,"NUM_ECHARGER":2,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":[]},
+            {"ECHARE_STATION_ID":"tSTA0013", "addr":"전라남도 나주시 이창동 511-9 ", "name": "이창동 주민센터", "chargerType": "DC차데모+AC3상+DC콤보", "ESTATION_LOC_LATITUDE":34.913115,"ESTATION_LOC_LONGITUDE":126.657689,"NUM_ECHARGER":3,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":[]},
+            {"ECHARE_STATION_ID":"tSTA0014", "addr":"전라남도 나주시 다시면 회진리 163 ", "name": "천연염색문화관", "chargerType": "DC차데모+AC3상+DC콤보", "ESTATION_LOC_LATITUDE":34.956448,"ESTATION_LOC_LONGITUDE":126.782025,"NUM_ECHARGER":4,"PEER_TYPE":"aggrePeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0005","tSTA0010","tSTA0001"]},
+            {"ECHARE_STATION_ID":"tSTA0015", "addr":"전라남도 나주시 반남면 신촌리 262-1 ", "name": "반남국립박물관", "chargerType": "DC차데모+AC3상+DC콤보", "ESTATION_LOC_LATITUDE":35.044207,"ESTATION_LOC_LONGITUDE":126.847201,"NUM_ECHARGER":5,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":[]}
+        ]
+    )
 }
 
 function getEchargers() {
-    return fetch('https://gist.githubusercontent.com/jhs9396/b11b778cdfa8fbe883371593347a191b/raw/458b545a9b65bbd4e2188aca5c446e3b874449c0/Echarger')
-        .then(function(response) {
-            return response.json()
-        }).then(function(json) {
-            // console.log('parsed json', json)
-            return echargers = json.echarger
-        }).catch(function(ex) {
-            console.log('parsing failed', ex)
-        });
+    // return fetch('https://gist.githubusercontent.com/jhs9396/b11b778cdfa8fbe883371593347a191b/raw/458b545a9b65bbd4e2188aca5c446e3b874449c0/Echarger')
+    //     .then(function(response) {
+    //         return response.json()
+    //     }).then(function(json) {
+    //         // console.log('parsed json', json)
+    //         return echargers = json.echarger
+    //     }).catch(function(ex) {
+    //         console.log('parsing failed', ex)
+    //     });
+
+    return Promise.resolve(echargers = [
+            {"ECHARGER_ID":"tCHR0001","ECHARGER_CONNECTOR_TYPE":"DC10","ECHARE_STATION_ID":"tSTA0001"},
+            {"ECHARGER_ID":"tCHR0002","ECHARGER_CONNECTOR_TYPE":"AC7","ECHARE_STATION_ID":"tSTA0002"},
+            {"ECHARGER_ID":"tCHR0003","ECHARGER_CONNECTOR_TYPE":"DC7","ECHARE_STATION_ID":"tSTA0002"},
+            {"ECHARGER_ID":"tCHR0004","ECHARGER_CONNECTOR_TYPE":"AC5","ECHARE_STATION_ID":"tSTA0003"},
+            {"ECHARGER_ID":"tCHR0005","ECHARGER_CONNECTOR_TYPE":"DC10","ECHARE_STATION_ID":"tSTA0003"},
+            {"ECHARGER_ID":"tCHR0006","ECHARGER_CONNECTOR_TYPE":"AC7","ECHARE_STATION_ID":"tSTA0003"},
+            {"ECHARGER_ID":"tCHR0007","ECHARGER_CONNECTOR_TYPE":"DC7","ECHARE_STATION_ID":"tSTA0004"},
+            {"ECHARGER_ID":"tCHR0008","ECHARGER_CONNECTOR_TYPE":"AC5","ECHARE_STATION_ID":"tSTA0004"},
+            {"ECHARGER_ID":"tCHR0009","ECHARGER_CONNECTOR_TYPE":"DC10","ECHARE_STATION_ID":"tSTA0004"},
+            {"ECHARGER_ID":"tCHR0010","ECHARGER_CONNECTOR_TYPE":"AC7","ECHARE_STATION_ID":"tSTA0004"},
+            {"ECHARGER_ID":"tCHR0011","ECHARGER_CONNECTOR_TYPE":"DC7","ECHARE_STATION_ID":"tSTA0005"},
+            {"ECHARGER_ID":"tCHR0012","ECHARGER_CONNECTOR_TYPE":"AC5","ECHARE_STATION_ID":"tSTA0005"},
+            {"ECHARGER_ID":"tCHR0013","ECHARGER_CONNECTOR_TYPE":"DC10","ECHARE_STATION_ID":"tSTA0005"},
+            {"ECHARGER_ID":"tCHR0014","ECHARGER_CONNECTOR_TYPE":"AC7","ECHARE_STATION_ID":"tSTA0005"},
+            {"ECHARGER_ID":"tCHR0015","ECHARGER_CONNECTOR_TYPE":"DC7","ECHARE_STATION_ID":"tSTA0005"},
+            {"ECHARGER_ID":"tCHR0016","ECHARGER_CONNECTOR_TYPE":"AC5","ECHARE_STATION_ID":"tSTA0006"},
+            {"ECHARGER_ID":"tCHR0017","ECHARGER_CONNECTOR_TYPE":"DC10","ECHARE_STATION_ID":"tSTA0007"},
+            {"ECHARGER_ID":"tCHR0018","ECHARGER_CONNECTOR_TYPE":"AC7","ECHARE_STATION_ID":"tSTA0007"},
+            {"ECHARGER_ID":"tCHR0019","ECHARGER_CONNECTOR_TYPE":"DC7","ECHARE_STATION_ID":"tSTA0008"},
+            {"ECHARGER_ID":"tCHR0020","ECHARGER_CONNECTOR_TYPE":"AC5","ECHARE_STATION_ID":"tSTA0008"},
+            {"ECHARGER_ID":"tCHR0021","ECHARGER_CONNECTOR_TYPE":"DC10","ECHARE_STATION_ID":"tSTA0008"},
+            {"ECHARGER_ID":"tCHR0022","ECHARGER_CONNECTOR_TYPE":"AC7","ECHARE_STATION_ID":"tSTA0009"},
+            {"ECHARGER_ID":"tCHR0023","ECHARGER_CONNECTOR_TYPE":"DC7","ECHARE_STATION_ID":"tSTA0009"},
+            {"ECHARGER_ID":"tCHR0024","ECHARGER_CONNECTOR_TYPE":"AC5","ECHARE_STATION_ID":"tSTA0009"},
+            {"ECHARGER_ID":"tCHR0025","ECHARGER_CONNECTOR_TYPE":"DC10","ECHARE_STATION_ID":"tSTA0009"},
+            {"ECHARGER_ID":"tCHR0026","ECHARGER_CONNECTOR_TYPE":"AC7","ECHARE_STATION_ID":"tSTA0010"},
+            {"ECHARGER_ID":"tCHR0027","ECHARGER_CONNECTOR_TYPE":"DC7","ECHARE_STATION_ID":"tSTA0010"},
+            {"ECHARGER_ID":"tCHR0028","ECHARGER_CONNECTOR_TYPE":"AC5","ECHARE_STATION_ID":"tSTA0010"},
+            {"ECHARGER_ID":"tCHR0029","ECHARGER_CONNECTOR_TYPE":"DC10","ECHARE_STATION_ID":"tSTA0010"},
+            {"ECHARGER_ID":"tCHR0030","ECHARGER_CONNECTOR_TYPE":"AC7","ECHARE_STATION_ID":"tSTA0010"},
+            {"ECHARGER_ID":"tCHR0031","ECHARGER_CONNECTOR_TYPE":"DC7","ECHARE_STATION_ID":"tSTA0011"},
+            {"ECHARGER_ID":"tCHR0032","ECHARGER_CONNECTOR_TYPE":"AC5","ECHARE_STATION_ID":"tSTA0012"},
+            {"ECHARGER_ID":"tCHR0033","ECHARGER_CONNECTOR_TYPE":"DC10","ECHARE_STATION_ID":"tSTA0012"},
+            {"ECHARGER_ID":"tCHR0034","ECHARGER_CONNECTOR_TYPE":"AC7","ECHARE_STATION_ID":"tSTA0013"},
+            {"ECHARGER_ID":"tCHR0035","ECHARGER_CONNECTOR_TYPE":"DC7","ECHARE_STATION_ID":"tSTA0013"},
+            {"ECHARGER_ID":"tCHR0036","ECHARGER_CONNECTOR_TYPE":"AC5","ECHARE_STATION_ID":"tSTA0013"},
+            {"ECHARGER_ID":"tCHR0037","ECHARGER_CONNECTOR_TYPE":"DC10","ECHARE_STATION_ID":"tSTA0014"},
+            {"ECHARGER_ID":"tCHR0038","ECHARGER_CONNECTOR_TYPE":"AC7","ECHARE_STATION_ID":"tSTA0014"},
+            {"ECHARGER_ID":"tCHR0039","ECHARGER_CONNECTOR_TYPE":"DC7","ECHARE_STATION_ID":"tSTA0014"},
+            {"ECHARGER_ID":"tCHR0040","ECHARGER_CONNECTOR_TYPE":"AC5","ECHARE_STATION_ID":"tSTA0014"},
+            {"ECHARGER_ID":"tCHR0041","ECHARGER_CONNECTOR_TYPE":"DC10","ECHARE_STATION_ID":"tSTA0015"},
+            {"ECHARGER_ID":"tCHR0042","ECHARGER_CONNECTOR_TYPE":"AC7","ECHARE_STATION_ID":"tSTA0015"},
+            {"ECHARGER_ID":"tCHR0043","ECHARGER_CONNECTOR_TYPE":"DC7","ECHARE_STATION_ID":"tSTA0015"},
+            {"ECHARGER_ID":"tCHR0044","ECHARGER_CONNECTOR_TYPE":"AC5","ECHARE_STATION_ID":"tSTA0015"},
+            {"ECHARGER_ID":"tCHR0045","ECHARGER_CONNECTOR_TYPE":"DC10","ECHARE_STATION_ID":"tSTA0015"}
+        ]
+    )
 }
 
 function getEVehicle() {
-    return fetch('https://gist.githubusercontent.com/jhs9396/413612e9dec20e8cd7c8afff17235414/raw/ed6591eac936d1dd2965ea11d11f7b43aac8f516/EVehicle')
-        .then(function(response) {
-            return response.json()
-        }).then(function(json) {
-            // console.log('parsed json', json)
-            return evehicles = json.evehicle
-        }).catch(function(ex) {
-            console.log('parsing failed', ex)
-        });
+    // return fetch('https://gist.githubusercontent.com/jhs9396/413612e9dec20e8cd7c8afff17235414/raw/ed6591eac936d1dd2965ea11d11f7b43aac8f516/EVehicle')
+    //     .then(function(response) {
+    //         return response.json()
+    //     }).then(function(json) {
+    //         // console.log('parsed json', json)
+    //         return evehicles = json.evehicle
+    //     }).catch(function(ex) {
+    //         console.log('parsing failed', ex)
+    //     });
+
+    return Promise.resolve(evehicles = [
+        {"remaining_amount":49.79067691413385,"ec_charge_time":"20180103063447","evehicle_model_name":"LEAF","eVehicle_id":"tVEH0001","status":"charged"},
+            {"remaining_amount":26.216825377053365,"ec_charge_time":"20180104040030","evehicle_model_name":"RAY","eVehicle_id":"tVEH0002","status":"charged"},
+            {"remaining_amount":50.502593068371105,"ec_charge_time":"20180103222749","evehicle_model_name":"IONIQ","eVehicle_id":"tVEH0003","status":"charged"},
+            {"remaining_amount":45.371253990856005,"ec_charge_time":"20180103023151","evehicle_model_name":"SM3","eVehicle_id":"tVEH0004","status":"charged"},
+            {"remaining_amount":83.42607124801144,"ec_charge_time":"20180103232343","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0005","status":"charged"},
+            {"remaining_amount":58.62918667705414,"ec_charge_time":"20180103083643","evehicle_model_name":"RAY","eVehicle_id":"tVEH0006","status":"charged"},
+            {"remaining_amount":48.78840890323613,"ec_charge_time":"20180102032204","evehicle_model_name":"SM3","eVehicle_id":"tVEH0007","status":"charged"},
+            {"remaining_amount":6.98011845936135,"ec_charge_time":"20180104135335","evehicle_model_name":"I3","eVehicle_id":"tVEH0008","status":"charged"},
+            {"remaining_amount":59.83627446493017,"ec_charge_time":"20180103015813","evehicle_model_name":"I3","eVehicle_id":"tVEH0009","status":"charged"},
+            {"remaining_amount":65.05323297258192,"ec_charge_time":"20180105004038","evehicle_model_name":"RAY","eVehicle_id":"tVEH0010","status":"charged"},
+            {"remaining_amount":76.15610589324876,"ec_charge_time":"20180104101358","evehicle_model_name":"RAY","eVehicle_id":"tVEH0011","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0001","remaining_amount":30.353679118685207,"ec_charge_time":"20180103182139","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0012","status":"charging"},
+            {"remaining_amount":55.18687388452113,"ec_charge_time":"20180104183313","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0013","status":"charged"},
+            {"remaining_amount":35.612162652083235,"ec_charge_time":"20180105154838","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0014","status":"charged"},
+            {"remaining_amount":88.236881435432,"ec_charge_time":"20180102070101","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0015","status":"charged"},
+            {"remaining_amount":10.764635857218074,"ec_charge_time":"20180104044608","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0016","status":"charged"},
+            {"remaining_amount":58.507654018538126,"ec_charge_time":"20180104002049","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0017","status":"charged"},
+            {"remaining_amount":6.3326755297033905,"ec_charge_time":"20180104121313","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0018","status":"charged"},
+            {"remaining_amount":82.94436150894319,"ec_charge_time":"20180103135948","evehicle_model_name":"IONIQ","eVehicle_id":"tVEH0019","status":"charged"},
+            {"remaining_amount":78.35408421644645,"ec_charge_time":"20180105231945","evehicle_model_name":"SM3","eVehicle_id":"tVEH0020","status":"charged"},
+            {"remaining_amount":77.17365339220318,"ec_charge_time":"20180104223936","evehicle_model_name":"I3","eVehicle_id":"tVEH0021","status":"charged"},
+            {"remaining_amount":26.51720247029843,"ec_charge_time":"20180103031629","evehicle_model_name":"SM3","eVehicle_id":"tVEH0022","status":"charged"},
+            {"remaining_amount":13.356166449206729,"ec_charge_time":"20180101043119","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0023","status":"charged"},
+            {"remaining_amount":71.78120787737262,"ec_charge_time":"20180102142518","evehicle_model_name":"I3","eVehicle_id":"tVEH0024","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0002","remaining_amount":24.472390813581967,"ec_charge_time":"20180105015933","evehicle_model_name":"IONIQ","eVehicle_id":"tVEH0025","status":"charging"},
+            {"remaining_amount":57.51872748355928,"ec_charge_time":"20180101182729","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0026","status":"charged"},
+            {"remaining_amount":45.37696513403757,"ec_charge_time":"20180102110859","evehicle_model_name":"RAY","eVehicle_id":"tVEH0027","status":"charged"},
+            {"remaining_amount":59.09587349961246,"ec_charge_time":"20180105175801","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0028","status":"charged"},
+            {"remaining_amount":70.89790991538489,"ec_charge_time":"20180105092010","evehicle_model_name":"RAY","eVehicle_id":"tVEH0029","status":"charged"},
+            {"remaining_amount":90.80880314853135,"ec_charge_time":"20180104081015","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0030","status":"charged"},
+            {"remaining_amount":54.32366286712521,"ec_charge_time":"20180104202234","evehicle_model_name":"SM3","eVehicle_id":"tVEH0031","status":"charged"},
+            {"remaining_amount":6.224749077286262,"ec_charge_time":"20180105030631","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0032","status":"charged"},
+            {"remaining_amount":65.81225391321527,"ec_charge_time":"20180102091253","evehicle_model_name":"IONIQ","eVehicle_id":"tVEH0033","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0002","remaining_amount":98.22942318721827,"ec_charge_time":"20180101155632","evehicle_model_name":"SM3","eVehicle_id":"tVEH0034","status":"charging"},
+            {"ECHARE_STATION_ID":"tSTA0003","remaining_amount":79.5733105022485,"ec_charge_time":"20180101234016","evehicle_model_name":"LEAF","eVehicle_id":"tVEH0035","status":"charging"},
+            {"remaining_amount":18.461568838462902,"ec_charge_time":"20180102215109","evehicle_model_name":"SM3","eVehicle_id":"tVEH0036","status":"charged"},
+            {"remaining_amount":61.11499183751246,"ec_charge_time":"20180101103910","evehicle_model_name":"IONIQ","eVehicle_id":"tVEH0037","status":"charged"},
+            {"remaining_amount":52.31934932326294,"ec_charge_time":"20180103224126","evehicle_model_name":"SM3","eVehicle_id":"tVEH0038","status":"charged"},
+            {"remaining_amount":81.41441213108756,"ec_charge_time":"20180104211738","evehicle_model_name":"RAY","eVehicle_id":"tVEH0039","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0003","remaining_amount":5.35218596884015,"ec_charge_time":"20180104110421","evehicle_model_name":"SM3","eVehicle_id":"tVEH0040","status":"charging"},
+            {"ECHARE_STATION_ID":"tSTA0003","remaining_amount":93.56142978989462,"ec_charge_time":"20180101033848","evehicle_model_name":"SM3","eVehicle_id":"tVEH0041","status":"charging"},
+            {"remaining_amount":79.60553016736245,"ec_charge_time":"20180103124240","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0042","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0004","remaining_amount":69.24219429108707,"ec_charge_time":"20180104163125","evehicle_model_name":"I3","eVehicle_id":"tVEH0043","status":"charging"},
+            {"remaining_amount":44.36500712915704,"ec_charge_time":"20180102093923","evehicle_model_name":"SM3","eVehicle_id":"tVEH0044","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0004","remaining_amount":7.370124755858986,"ec_charge_time":"20180105102150","evehicle_model_name":"IONIQ","eVehicle_id":"tVEH0045","status":"charging"},
+            {"remaining_amount":34.75022193139691,"ec_charge_time":"20180104054731","evehicle_model_name":"RAY","eVehicle_id":"tVEH0046","status":"charged"},
+            {"remaining_amount":95.23852519210828,"ec_charge_time":"20180103142934","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0047","status":"charged"},
+            {"remaining_amount":43.7374671833565,"ec_charge_time":"20180102224529","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0048","status":"charged"},
+            {"remaining_amount":23.760339739950876,"ec_charge_time":"20180104045710","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0049","status":"charged"},
+            {"remaining_amount":8.444462869032131,"ec_charge_time":"20180104190430","evehicle_model_name":"IONIQ","eVehicle_id":"tVEH0050","status":"charged"},
+            {"remaining_amount":32.67705362384638,"ec_charge_time":"20180104205251","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0051","status":"charged"},
+            {"remaining_amount":29.889152263097294,"ec_charge_time":"20180105220825","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0052","status":"charged"},
+            {"remaining_amount":89.06004657948793,"ec_charge_time":"20180102053539","evehicle_model_name":"SM3","eVehicle_id":"tVEH0053","status":"charged"},
+            {"remaining_amount":6.938504539253442,"ec_charge_time":"20180103132638","evehicle_model_name":"I3","eVehicle_id":"tVEH0054","status":"charged"},
+            {"remaining_amount":82.99423145583472,"ec_charge_time":"20180105195614","evehicle_model_name":"RAY","eVehicle_id":"tVEH0055","status":"charged"},
+            {"remaining_amount":9.792187117323913,"ec_charge_time":"20180105061612","evehicle_model_name":"RAY","eVehicle_id":"tVEH0056","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0004","remaining_amount":58.025108497428754,"ec_charge_time":"20180103210050","evehicle_model_name":"RAY","eVehicle_id":"tVEH0057","status":"charging"},
+            {"remaining_amount":66.09982124321016,"ec_charge_time":"20180103103554","evehicle_model_name":"LEAF","eVehicle_id":"tVEH0058","status":"charged"},
+            {"remaining_amount":80.76683037020574,"ec_charge_time":"20180101060547","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0059","status":"charged"},
+            {"remaining_amount":83.68953883091929,"ec_charge_time":"20180104225348","evehicle_model_name":"SM3","eVehicle_id":"tVEH0060","status":"charged"},
+            {"remaining_amount":94.01028376820103,"ec_charge_time":"20180101093536","evehicle_model_name":"I3","eVehicle_id":"tVEH0061","status":"charged"},
+            {"remaining_amount":87.889349159602,"ec_charge_time":"20180104035524","evehicle_model_name":"SM3","eVehicle_id":"tVEH0062","status":"charged"},
+            {"remaining_amount":90.73656234979182,"ec_charge_time":"20180104114257","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0063","status":"charged"},
+            {"remaining_amount":8.551837214929524,"ec_charge_time":"20180105205436","evehicle_model_name":"I3","eVehicle_id":"tVEH0064","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0004","remaining_amount":92.63264157888503,"ec_charge_time":"20180101103947","evehicle_model_name":"RAY","eVehicle_id":"tVEH0065","status":"charging"},
+            {"ECHARE_STATION_ID":"tSTA0005","remaining_amount":12.146548961838832,"ec_charge_time":"20180101102810","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0066","status":"charging"},
+            {"remaining_amount":16.022462990509702,"ec_charge_time":"20180103071044","evehicle_model_name":"LEAF","eVehicle_id":"tVEH0067","status":"charged"},
+            {"remaining_amount":37.66334532593396,"ec_charge_time":"20180103095007","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0068","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0005","remaining_amount":60.568048595902944,"ec_charge_time":"20180103004242","evehicle_model_name":"IONIQ","eVehicle_id":"tVEH0069","status":"charging"},
+            {"remaining_amount":61.573941207030344,"ec_charge_time":"20180105012335","evehicle_model_name":"IONIQ","eVehicle_id":"tVEH0070","status":"charged"},
+            {"remaining_amount":61.66164194520518,"ec_charge_time":"20180103211435","evehicle_model_name":"IONIQ","eVehicle_id":"tVEH0071","status":"charged"},
+            {"remaining_amount":86.72770202373371,"ec_charge_time":"20180104195452","evehicle_model_name":"RAY","eVehicle_id":"tVEH0072","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0005","remaining_amount":6.121334455945437,"ec_charge_time":"20180102000643","evehicle_model_name":"SM3","eVehicle_id":"tVEH0073","status":"charging"},
+            {"remaining_amount":22.81171945590864,"ec_charge_time":"20180102024058","evehicle_model_name":"IONIQ","eVehicle_id":"tVEH0074","status":"charged"},
+            {"remaining_amount":22.619002198431513,"ec_charge_time":"20180102221948","evehicle_model_name":"RAY","eVehicle_id":"tVEH0075","status":"charged"},
+            {"remaining_amount":1.8840767304543307,"ec_charge_time":"20180101014212","evehicle_model_name":"LEAF","eVehicle_id":"tVEH0076","status":"charged"},
+            {"remaining_amount":23.21075818344074,"ec_charge_time":"20180104173332","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0077","status":"charged"},
+            {"remaining_amount":51.493095629146325,"ec_charge_time":"20180104132010","evehicle_model_name":"SM3","eVehicle_id":"tVEH0078","status":"charged"},
+            {"remaining_amount":90.40662263136306,"ec_charge_time":"20180104083510","evehicle_model_name":"SM3","eVehicle_id":"tVEH0079","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0005","remaining_amount":30.02434116390047,"ec_charge_time":"20180102023042","evehicle_model_name":"RAY","eVehicle_id":"tVEH0080","status":"charging"},
+            {"remaining_amount":75.40741132044604,"ec_charge_time":"20180104153359","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0081","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0005","remaining_amount":14.170952011792592,"ec_charge_time":"20180102070926","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0082","status":"charging"},
+            {"remaining_amount":97.45334075626641,"ec_charge_time":"20180101125532","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0083","status":"charged"},
+            {"remaining_amount":16.801890012619513,"ec_charge_time":"20180103013411","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0084","status":"charged"},
+            {"remaining_amount":11.670179026208448,"ec_charge_time":"20180104062129","evehicle_model_name":"SOUL","eVehicle_id":"tVEH0085","status":"charged"},
+            {"remaining_amount":5.006490919135142,"ec_charge_time":"20180101075046","evehicle_model_name":"LEAF","eVehicle_id":"tVEH0086","status":"charged"},
+            {"remaining_amount":43.365235295137346,"ec_charge_time":"20180104221448","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0087","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0006","remaining_amount":82.72273991242804,"ec_charge_time":"20180104061511","evehicle_model_name":"SM3","eVehicle_id":"tVEH0088","status":"charging"},
+            {"remaining_amount":70.41687332559137,"ec_charge_time":"20180104021633","evehicle_model_name":"SM3","eVehicle_id":"tVEH0089","status":"charged"},
+            {"remaining_amount":100.11044376972312,"ec_charge_time":"20180105142744","evehicle_model_name":"SPARK","eVehicle_id":"tVEH0090","status":"charged"},
+            {"remaining_amount":72.21758795023484,"ec_charge_time":"20180101025039","evehicle_model_name":"IONIQ","eVehicle_id":"tVEH0091","status":"charged"},
+            {"remaining_amount":52.709530496219394,"ec_charge_time":"20180102063757","evehicle_model_name":"LEAF","eVehicle_id":"tVEH0092","status":"charged"},
+            {"remaining_amount":53.572193291226476,"ec_charge_time":"20180102020729","evehicle_model_name":"I3","eVehicle_id":"tVEH0093","status":"charged"},
+            {"ECHARE_STATION_ID":"tSTA0007","remaining_amount":37.427507482059205,"ec_charge_time":"20180102205257","evehicle_model_name":"LEAF","eVehicle_id":"tVEH0094","status":"charging"},
+            {"remaining_amount":95.01896667165012,"ec_charge_time":"20180105215449","evehicle_model_name":"I3","eVehicle_id":"tVEH0095","status":"charged"},
+            {"remaining_amount":39.52905166139982,"ec_charge_time":"20180101210722","evehicle_model_name":"SM3","eVehicle_id":"tVEH0096","status":"charged"},
+            {"remaining_amount":77.23308834062598,"ec_charge_time":"20180104164357","evehicle_model_name":"SM3","eVehicle_id":"tVEH0097","status":"charged"},
+            {"remaining_amount":35.05462432993428,"ec_charge_time":"20180102184421","evehicle_model_name":"RAY","eVehicle_id":"tVEH0098","status":"charged"},
+            {"remaining_amount":76.48805521818342,"ec_charge_time":"20180102111825","evehicle_model_name":"SM3","eVehicle_id":"tVEH0099","status":"charged"},
+            {"remaining_amount":6.473906670668283,"ec_charge_time":"20180104113706","evehicle_model_name":"LEAF","eVehicle_id":"tVEH0100","status":"charged"}
+        ])
 }
 
 
@@ -351,10 +547,8 @@ function addControl(m) {
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(divElem);
     //============================
 
-
     var divElem2 = document.getElementById('toolbar');
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(divElem2);
-
 }
 
 function numberFormat(number){
@@ -408,9 +602,9 @@ function to_json(param,stations,charges,vehicles){
     var random3 = Math.floor((Math.random()*vehicles.length));
 
     // ID Random으로 발생 - log
-    console.log('random1', stations[random1].ECHARE_STATION_ID);
-    console.log('random2', charges[random2].ECHARGER_ID);
-    console.log('random3', vehicles[random3].eVehicle_id);
+    // console.log('random1', stations[random1].ECHARE_STATION_ID);
+    // console.log('random2', charges[random2].ECHARGER_ID);
+    // console.log('random3', vehicles[random3].eVehicle_id);
 
     // Station, ECharger, EVehicle Object 저장
     var station_id = stations[random1].ECHARE_STATION_ID;				// 충전소 ID
@@ -432,12 +626,12 @@ function to_json(param,stations,charges,vehicles){
             }
         }
     }
-    console.log('evehicle_max_amount', evehicle_max_amount);
+    // console.log('evehicle_max_amount', evehicle_max_amount);
 
     // 사용량 Random 발생
     var amount = Math.random()*10+90;										// 충전량 생성 (90~100 사이 값)
-    console.log('amount', amount);
-    console.log('amount sum', evehicle_remain_amt+amount);
+    // console.log('amount', amount);
+    // console.log('amount sum', evehicle_remain_amt+amount);
 
     var amount_sum = evehicle_remain_amt+amount;							// 충전후 총 량
 
@@ -492,7 +686,7 @@ function to_json(param,stations,charges,vehicles){
 
         jsonArray.push(jsonObj);
         jsonArray.push(jsonObj2);
-        console.log('jsonObj_result', jsonArray);
+        // console.log('jsonObj_result', jsonArray);
 
         return jsonArray;
     }
