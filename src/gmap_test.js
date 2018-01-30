@@ -355,13 +355,7 @@ function addControl(m) {
     var divElem2 = document.getElementById('toolbar');
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(divElem2);
 
-    // $(divElem2).find('button').click(()=>{
-    //     console.log('dd');
-    //     $('detailInfo').toggleClass('show')
-    // })
-
 }
-
 
 function numberFormat(number){
     return (number<10?'0'+number:number);
