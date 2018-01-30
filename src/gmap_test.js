@@ -264,7 +264,7 @@ function showInfo(station, marker) {
     }
 
     var tmpl = echargers.filter((v)=>v.ECHARE_STATION_ID == station.ECHARE_STATION_ID).map(v=>
-        `<li>${v.ECHARGER_ID}(${v.ECHARGER_CONNECTOR_TYPE})  <a href="#" class="button button-sm button-diabled"><i class="fa fa-plug"></i></a></li>`
+        `<li>${v.ECHARGER_ID}(${v.ECHARGER_CONNECTOR_TYPE})  <a href="#" class="button button-sm ${ Math.random() <0.8 ? 'button-diabled' : ''}"><i class="fa fa-plug"></i></a></li>`
     )
 
 
