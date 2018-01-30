@@ -1,0 +1,42 @@
+{
+  "_from": "font-awesome",
+  "_id": "font-awesome@4.7.0",
+  "_inBundle": false,
+  "_integrity": "sha1-j6jPBBGhoxr9B7BtKQK7n8gVoTM=",
+  "_location": "/font-awesome",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "font-awesome",
+    "name": "font-awesome",
+    "escapedName": "font-awesome",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/",
+    "/faker"
+  ],
+  "_resolved": "https://registry.npmjs.org/font-awesome/-/font-awesome-4.7.0.tgz",
+  "_shasum": "8fa8cf0411a1a31afd07b06d2902bb9fc815a133",
+  "_shrinkwrap": null,
+  "_spec": "font-awesome",
+  "_where": "/home/callin/Project/d3_kepco_poc",
+  "bin": null,
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "Font Awesome is a full suite of 675 pictographic icons for easy scalable vector graphics on websites, created and maintained by [Dave Gandy](https://twitter.com/davegandy). Stay up to date with the latest release and announcements on Twitter: [@fontawesome](http://twitter.com/fontawesome).",
+  "devDependencies": {},
+  "engines": {
+    "node": ">=0.10.3"
+  },
+  "name": "font-awesome",
+  "optionalDependencies": {},
+  "peerDependencies": {},
+  "scripts": {},
+  "version": "4.7.0"
+}

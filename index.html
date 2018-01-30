@@ -2,564 +2,83 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet">
+    <title>V_BA</title>
+    <link rel="stylesheet" href="./ext/font-awesome/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="./asset/gmap_test.css">
+    <script src="./ext/d3/build/d3.min.js"></script>
+    <script src="./ext/d3-sankey.js"></script>
+
     <script>
-        function updateTextInput(val) {
-            document.getElementById('textInput').value=val;
-        }
-
-        function realtimeClock() {
-            document.rtcForm.rtcInput.value = getTimeStamp();
-            setTimeout("realtimeClock()", 1000);
-        }
-
-        function getTimeStamp() { // 24시간제
-            var d = new Date();
-
-            var s =
-                leadingZeros(d.getFullYear(), 4) + '-' +
-                leadingZeros(d.getMonth() + 1, 2) + '-' +
-                leadingZeros(d.getDate(), 2) + ' ' +
-
-                leadingZeros(d.getHours(), 2) + ':' +
-                leadingZeros(d.getMinutes(), 2) + ':' +
-                leadingZeros(d.getSeconds(), 2);
-
-            return s;
-        }
-
-        function leadingZeros(n, digits) {
-            var zero = '';
-            n = n.toString();
-
-            if (n.length < digits) {
-                for (i = 0; i < digits - n.length; i++)
-                    zero += '0';
-            }
-            return zero + n;
-        }
-
+        var sankey = d3.sankey();
     </script>
-    <style>
-        svg {
-            position: absolute;
-            box-sizing: border-box;
-            border: 1px solid darkred;
-            height:100%;
-            width: 100%;
-        }
-        svg text {
-            font-family: FontAwesome;
-        }
-        html, body {
-            background-color: #eee;
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-            overflow: hidden;
-            font-family: 'Nunito', 'Nanum Gothic', sans-serif;
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
 
-        small {
-            font-size: 70%;
-            font-weight: 400;
-        }
+    <script src="./ext/echarts.min.js"></script>
+    <script src="./ext/jquery/dist/jquery.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFKy2PETbXuW2gj5FFar1c8LzGv1DqBc0&callback=initMap"
+            type="text/javascript"></script>
+    <script src="./ext/GraphWidget.js"> </script>
+    <script src="./ext/customOverlay.js"></script>
+    <script src="./src/gmap_test.js"></script>
+    <script src="./src/sankey.js"></script>
 
-        ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        /*---------------------------------------------------------*/
-
-        .color-main {
-            background-color: #8284d7 !important;
-            color: white !important;
-        }
-
-        /*---------------------------------------------------------*/
-
-        .flex {
-            position: relative;
-            display: flex;
-            align-items: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        .align-right {
-            text-align: right;
-        }
-
-        /*---------------------------------------------------------*/
-
-        .sidebar {
-            width: 100%;
-            max-width: 380px;
-            height: 100%;
-            position: fixed;
-            right: 0;
-            top: 0;
-            padding: 1rem;
-        }
-
-        /*---------------------------------------------------------*/
-
-        .card {
-            margin: 1rem 0;
-            box-sizing: border-box;
-            border: 1px solid #8284d7;
-            border-radius: .255rem;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-        }
-
-        .card-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: .8rem 0;
-        }
-
-        .card-header {
-            padding: .8rem 1rem;
-            font-weight: 700;
-            font-size: .855rem;
-        }
-
-        .card-block {
-            padding: 0 1rem;
-            color: #383838;
-        }
-
-        .card-block::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-            background-color: #F5F5F5;
-        }
-
-        .card-block::-webkit-scrollbar {
-            width: 6px;
-            background-color: #F5F5F5;
-        }
-
-        .card-block::-webkit-scrollbar-thumb {
-            background-color: #8284d7;
-        }
-
-        .card-title {
-            font-size: .8rem;
-        }
-
-        .card-content__title {
-            font-size: 1.35rem;
-            font-weight: 700;
-        }
-
-        /*---------------------------------------------------------*/
-
-        table {
-            width: 100%;
-            border-spacing: 0;
-            border-collapse: collapse;
-            font-size: .75rem;
-        }
-
-        th, td {
-            min-width: 40px;
-            padding: .75rem .1rem;
-            box-sizing: border-box;
-            border-bottom: 1px solid #ddd;
-            text-align: center;
-        }
-
-        tbody tr:hover {
-            cursor: pointer;
-        }
-
-        /*---------------------------------------------------------*/
-
-        figure i {
-            padding: 1rem 1rem 1rem 0;
-            font-size: 2.2rem !important;
-        }
-
-        figcaption {
-            display: flex;
-            flex-direction: column;
-        }
-
-        figcaption h2 {
-            margin: 0;
-            padding: 0;
-            font-size: 1.1rem;
-        }
-
-        figcaption span {
-            font-size: .75rem;
-        }
-
-        /*---------------------------------------------------------*/
-
-        .box {
-            margin: 1.2rem;
-            color: #8284d7;
-        }
-
-        .box-center {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            margin: auto;
-        }
-
-        .box-top-left {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .box-top-right {
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
-
-        .box-bottom-left {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-        }
-
-        .box-bottom-right {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-        }
-
-        /*---------------------------------------------------------*/
-
-        .btn-group li {
-            margin: 0 .3rem;
-            color: #8284d7;
-        }
-
-        .btn {
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: #8284d7;
-            color: white;
-        }
-
-        .btn-icon {
-            width: 40px;
-            height: 40px;
-            display: block;
-            box-sizing: border-box;
-            border: 2px solid #8284d7;
-            border-radius: 50%;
-            line-height: 38px;
-            text-align: center;
-        }
-
-        /*---------------------------------------------------------*/
-
-        input[type="range"] {
-            -webkit-appearance:none;
-            width: 200px;
-            height: 2px;
-            background: #8284d7;
-            outline: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance:none;
-            width:18px;
-            height:18px;
-            border-radius: 100%;
-            background: white;
-            position:relative;
-            border: 3px solid #8284d7;
-            z-index:3;
-            cursor: pointer;
-        }
-
-        input[type="text"] {
-            background-color: #eee;
-            margin: 0 .5rem;
-            border: none;
-            outline: none;
-            text-align: center;
-            font-size: .75rem;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 700;
-            color: #8284d7;
-        }
-
-        /*---------------------------------------------------------*/
-
-        .ruler {
-            position: absolute;
-            left: 2px;
-            top: 0;
-        }
-
-        .ruler .mm {
-            background-color: #8284d7;
-            width: 1px;
-            height: 5px;
-            margin-right: 14.75px;
-            display: inline-block;
-        }
-
-        /*---------------------------------------------------------*/
-
-        .gradient-line {
-            background: linear-gradient(#8284d7, #60d8a3);
-            width: 10px;
-            height: 150px;
-            display: block;
-            position: relative;
-            margin-bottom: 50px
-        }
-
-        .gradient-line::before {
-            content:'NEW';
-            position: absolute;
-            top: -1px;
-            margin-left: 18px;
-            font-weight: 700;
-            font-size: .68rem;
-        }
-
-        .gradient-line::after {
-            content:'OLD';
-            position: absolute;
-            bottom: -1px;
-            margin-left: 19px;
-            font-weight: 700;
-            font-size: .68rem;
-            color: #60d8a3;
-        }
-
-        /*---------------------------------------------------------*/
-
-        .realTime-table .card-block {
-            height: 246px;
-            overflow-y: scroll;
-        }
-
-    </style>
-
-    <!--for svg-->
-    <!--<style>-->
-        <!--.axis line {-->
-            <!--stroke: #8284d7;-->
-        <!--}-->
-    <!--</style>-->
 </head>
-<body onload="realtimeClock()">
-<svg viewBox="-300 -500 800 800" >
-    <defs>
-        <filter id="drop-shadow" x="-40%" y="-40%" width="200%" height="200%">
-        <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"></feGaussianBlur>
-        <feOffset in="blur" dx="3" dy="3" result="offsetBlur"></feOffset>
-        <feMerge><feMergeNode in="offsetBlur"></feMergeNode>
-            <feMergeNode in="SourceGraphic"></feMergeNode>
-        </feMerge>
-        </filter>
-    </defs>
-    <!--<text>&#xf0ce;</text>-->
-</svg>
+<body>
 
-
-<div class="box box-top-left">
-    <ul class="flex btn-group">
-        <li><a class="btn btn-icon"><i class="fa fa-cube" aria-hidden="true"></i></a></li>
-        <li><a class="btn btn-icon"><i class="fa fa-car" aria-hidden="true"></i></a></li>
-        <li><a class="btn btn-icon"><i class="fa fa-bolt" aria-hidden="true"></i></a></li>
-        <li>
-            <form name="rtcForm">
-                <input type="text" name="rtcInput" size="20" readonly="readonly" />
-            </form>
-        </li>
-    </ul>
+<div id="main"></div>
+<div id="toolbar" class="toolbar">
+    <a class="button showChart">&#1064;</a>
+    <a class="button showChart" href="tree.html">G</a>
 </div>
-
-<div class="box box-bottom-left">
-    <ul>
-        <li>
-            <span class="gradient-line"></span>
-        </li>
-        <li class="flex">
-            <form>
-                <input type="range" value="100" min="100" max="200" step="10" onchange="updateTextInput(this.value);"/>
-                <input type="text" id="textInput" value="100" size="4" readonly="readonly" /><span><small><strong>%</strong></small></span>
-            </form>
-            <div class="ruler">
-                <div class="mm"></div>
-                <div class="mm"></div>
-                <div class="mm"></div>
-                <div class="mm"></div>
-                <div class="mm"></div>
-                <div class="mm"></div>
-                <div class="mm"></div>
-                <div class="mm"></div>
-                <div class="mm"></div>
-                <div class="mm"></div>
-                <div class="mm"></div>
-            </div>
-        </li>
-    </ul>
-</div>
-
-<div class="sidebar">
-    <div class="card color-main">
-        <div class="card-header">
-            <figure class="flex">
-                <i class="fa fa-cube" aria-hidden="true"></i>
-                <figcaption>
-                    <h2>BLock 12345</h2>
-                    <span><small>2018.01.18 PM 16 : 05 : 00</small></span>
-                </figcaption>
-            </figure>
-        </div>
-        <div class="card-block color-main">
-            <div class="card-flex">
-                <div class="card-title">총 충전전력량</div>
-                <div class="card-content align-right">
-                    <div class="card-content__title">392,394 <span class="card-content-icon"><small>&#9660;</small></span> <span><small>1,281</small></span> </div>
-                    <div><small>( 283,283,281 )</small></div>
-                </div>
-            </div>
-            <div class="card-flex">
-                <div class="card-title">총 거래량</div>
-                <div class="card-content align-right">
-                    <div class="card-content__title">1,392 <span class="card-content__icon reverse"><small>&#9660;</small></span> <span><small>213</small></span> </div>
-                    <div><small>( 283,283,281 )</small></div>
-                </div>
-            </div>
-            <div class="card-flex">
-                <div class="card-title">총 거래금액</div>
-                <div class="card-content align-right">
-                    <div class="card-content__title">1,392,394 <span class="card-content__icon"><small>&#9660;</small></span> <span><small>1,281</small></span> </div>
-                    <div><small>( 283,283,281 )</small></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header color-main">
-            상세 거래 정보
-        </div>
-        <div class="card-block">
-            <div class="card-flex">
-                <div class="card-title">거래된 충전소 수</div>
-                <div class="card-content align-right">
-                    <div class="card-content__title">92,394 <span class="card-content-icon"><small>&#9660;</small></span> <span><small>1,281</small></span> </div>
-                    <div><small>( 13,283,281 )</small></div>
-                </div>
-            </div>
-            <div class="card-flex">
-                <div class="card-title">거래된 충전기 수</div>
-                <div class="card-content align-right">
-                    <div class="card-content__title">123,372 <span class="card-content-icon"><small>&#9660;</small></span> <span><small>1,281</small></span> </div>
-                    <div><small>( 53,283,281 )</small></div>
-                </div>
-            </div>
-            <div class="card-flex">
-                <div class="card-title">거래된 전기차 수</div>
-                <div class="card-content align-right">
-                    <div class="card-content__title">392,394 <span class="card-content-icon"><small>&#9660;</small></span> <span><small>1,281</small></span> </div>
-                    <div><small>( 94,283,498 )</small></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card realTime-table">
-        <div class="card-header color-main">
-            실시간 거래 데이터 현황
-        </div>
-        <div class="card-block">
-            <table>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>차량</th>
-                    <th>충전량</th>
-                    <th>Start</th>
-                    <th>Finish</th>
-                    <th>장소</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>B123841</td>
-                    <td>K3</td>
-                    <td>23,291</td>
-                    <td>14:55:18</td>
-                    <td>16:01:18</td>
-                    <td>제주</td>
-                </tr>
-                <tr>
-                    <td>B123841</td>
-                    <td>K3</td>
-                    <td>23,291</td>
-                    <td>14:55:18</td>
-                    <td>---</td>
-                    <td>제주</td>
-                </tr>
-                <tr>
-                    <td>B123841</td>
-                    <td>K3</td>
-                    <td>23,291</td>
-                    <td>14:55:18</td>
-                    <td>---</td>
-                    <td>제주</td>
-                </tr>
-                <tr>
-                    <td>B123841</td>
-                    <td>K3</td>
-                    <td>23,291</td>
-                    <td>14:55:18</td>
-                    <td>16:01:18</td>
-                    <td>제주</td>
-                </tr>
-                <tr>
-                    <td>B123841</td>
-                    <td>K3</td>
-                    <td>23,291</td>
-                    <td>14:55:18</td>
-                    <td>16:01:18</td>
-                    <td>제주</td>
-                </tr>
-                <tr>
-                    <td>B123841</td>
-                    <td>K3</td>
-                    <td>23,291</td>
-                    <td>14:55:18</td>
-                    <td>16:01:18</td>
-                    <td>제주</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+<div id="recentEvents" >
 
 </div>
 
-<script src="./dist/app.dev.js" ></script>
+<div class="detailInfo-box" >
+
+    <div id='detailInfo' class="card__detail">
+
+        <div class="detail__box">
+            <div class="chart">
+                <table class="detail__table">
+                    <thead>
+                    <tr>
+                        <th>NO</th>
+                        <th>E-Chartger ID</th>
+                        <th>LEVEL</th>
+                        <th>GRAPH</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>NO</td>
+                        <td>E-Chartger ID</td>
+                        <td>LEVEL</td>
+                        <td><a class="button-sm button abn_detail" >open</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="chart4" class="chart">
+                <svg width="600" height="300" style="display: flex; margin: 1rem auto;"></svg>
+            </div>
+        </div>
+
+        <div class="detail__box">
+
+            <div id="chart1" class="chart">
+            </div>
+
+            <div id="chart2" class="chart">
+            </div>
+
+            <div id="chart3" class="chart">
+            </div>
+        </div>
+
+        <div id="abn" class="detail__button button showChart">
+            <a id='abn_close_btn'>X</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

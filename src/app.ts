@@ -457,7 +457,7 @@ const station = [
     { name:'제주시 카카오 본사', charger:'AC완속'},
     { name:'제주시 카카오 본사', charger:'AC완속'},
     { name:'제주시 카카오 본사', charger:'AC완속'}
-].map((v,idx)=>{ v['id']='st_'+idx; return v })
+].map((v,idx)=>{ v['id']='st_'+idx; return v });
 const charger = []
 const ecar = [
     {carType: '아이오닉'},

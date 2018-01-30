@@ -2,26 +2,10 @@ import * as d3 from "d3"
 import * as most from "most"
 import {periodic} from "most"
 import Block from "./view/Block"
-
+import { dummyBlockDataGen } from "./datamodel/DummyData"
+import {$countdownFrom , $everyNsec, randomN,  } from "./Util.coffee"
 svg = d3.select('svg')
 
-randomN = (n)-> Math.floor(Math.random()*n) + 1
-$everyNsec = (n) -> periodic n*1000
-delayPromise = ( ms, value) ->
-  new Promise (res) =>
-    setTimeout =>
-      res(value)
-    ,ms
-
-countdown = (delay, start) -> yield delayPromise(delay, i) for i in [start..1]
-$countdownFrom = (n) -> most.generate(countdown,1,n)
-
-# --------- dummy data gen ---------
-dummyCarDataGen = (v) ->
-  ({type:'car', id:"car_#{idx}" , depth:2 } for idx in [0..randomN(5)])
-dummyStationDataGen = (v) ->
-  ({type:'station', id: "st_#{idx}", depth:1, children: dummyCarDataGen("st_#{idx}")} for idx in [0..randomN(3)])
-dummyBlockDataGen = (v) -> {type:'block', id: v, depth:0, ts:d3.now(), children: dummyStationDataGen(v)}
 # ------------------------------------
 
 toD3Tree = (dur, interval, lTime=10) ->
@@ -93,6 +77,7 @@ leadTimeSec = 10
 $main = most.zip ((a,b)->b), $everyNsec(blockGenPeriodSec), $countdownFrom(100)
   .tap animateAxis(axisRangeSec, blockGenPeriodSec, leadTimeSec)
   .map dummyBlockDataGen
+  .tap console.log
   .map toWindowedBlock(blockGenPeriodSec)
   .map toD3Tree(axisRangeSec, blockGenPeriodSec, leadTimeSec)
 
