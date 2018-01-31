@@ -41,7 +41,10 @@ StationNode = (d,i,node,template) ->
   selection = d3.select(@)
   selection.append -> template.cloneNode(true)
   selection.select('.card-title strong')
-    .text((d)->d.data.type)
+    .text((d)->
+      console.log d
+      d.data.type
+    )
 
 
 CarCircle = (d,i,node) ->
@@ -55,6 +58,7 @@ CarCircle = (d,i,node) ->
     .duration(200)
     .ease(d3.easeBounce)
     .attr("r", 12)
+    .style("filter", "url(#drop-shadow)")
 
   selection.append 'text'
     .style('stroke', 'white')
@@ -75,8 +79,8 @@ StationOrCar = do ()->
   (d,i,node) ->
     switch d.data.type
       when 'block' then BlockCircle.call(@,d,i,node)
-#      when 'station' then StationNode.call(@,d,i,node,template)
-      when 'station' then StationCircle.call(@,d,i,node,template)
+      when 'station' then StationNode.call(@,d,i,node,template)
+#      when 'station' then StationCircle.call(@,d,i,node,template)
       when 'car' then CarCircle.call(@,d,i,node,template)
 #      when 'car' then CarNode.call(@,d,i,node,template)
 
@@ -126,8 +130,6 @@ Block = do ->
       .attr("d", (d)-> d3.linkHorizontal().x(direction*d.source.y).y(d.source.x)(d))
       .transition()
       .delay((d)->
-        console.log d
-
         if d.source.parent
           d.target.delay = 2200 + (Math.random() * 7700)
         else

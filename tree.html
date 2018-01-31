@@ -471,13 +471,14 @@
             align-items: center;
             border-radius: .225rem;
             font-family: FontAwesome;
-            text-align: center; 
+            text-align: center;
+            color: #fff;
             /*border: 1px solid #ccc;*/
         }
 
         .dataType.card .dataType-image img {
             width: 80%;
-            display: none; 
+            display: none;
         }
 
         /* --------------------------------------------------------- 스크롤제어 css  */
@@ -509,6 +510,10 @@
             padding: 0 .25rem; 
             border-radius: .225rem;
             border: .03rem solid #ccc;
+        }
+
+        .dataType.on .dataType-image {
+            color: #585858;
         }
 
         .dataType.on .card-title,
@@ -554,7 +559,7 @@
     -->
 
 
-    <foreignobject x="-50" y="-25" width="100" height="50" id="citem">
+    <foreignobject x="-20" y="-30" width="100" height="50" id="citem">
         <div class="card card-flex dataType" onclick="cardChange()" id="dataType">
             <div class="card-block dataType-image">
                 &#xf0e7;
@@ -696,12 +701,12 @@
                 </div>
             </div>
             <div class="card-flex">
-                <div class="card-title">총 거래량</div>
+                <div class="card-title">총 거래횟수</div>
                 <div class="card-content align-right">
                     <div class="card-content__title">1,392 <span class="card-content__icon reverse"><small>&#9660;</small></span> <span><small>213</small></span> </div>
                     <div><small>( 283,283,281 )</small></div>
                 </div>
-            </div>
+            </div>랳
             <div class="card-flex">
                 <div class="card-title">총 거래금액</div>
                 <div class="card-content align-right">

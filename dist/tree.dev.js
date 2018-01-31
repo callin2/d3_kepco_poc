@@ -33538,6 +33538,7 @@ StationNode = function(d, i, node, template) {
     return template.cloneNode(true);
   });
   return selection.select('.card-title strong').text(function(d) {
+    console.log(d);
     return d.data.type;
   });
 };
@@ -33547,7 +33548,7 @@ CarCircle = function(d, i, node) {
   selection = __WEBPACK_IMPORTED_MODULE_0_d3__["j" /* select */](this);
   selection.append('circle').attr("r", 0).attr("fill", "#8284d7").transition().delay(function(d, i) {
     return i * 30;
-  }).duration(200).ease(__WEBPACK_IMPORTED_MODULE_0_d3__["b" /* easeBounce */]).attr("r", 12);
+  }).duration(200).ease(__WEBPACK_IMPORTED_MODULE_0_d3__["b" /* easeBounce */]).attr("r", 12).style("filter", "url(#drop-shadow)");
   return selection.append('text').style('stroke', 'white').style('fill', 'white').attr("y", 5).attr('text-anchor', 'middle').text(function() {
     return '\uf1b9';
   });
@@ -33568,9 +33569,9 @@ StationOrCar = (function() {
     switch (d.data.type) {
       case 'block':
         return BlockCircle.call(this, d, i, node);
-      //      when 'station' then StationNode.call(@,d,i,node,template)
       case 'station':
-        return StationCircle.call(this, d, i, node, template);
+        return StationNode.call(this, d, i, node, template);
+      //      when 'station' then StationCircle.call(@,d,i,node,template)
       case 'car':
         return CarCircle.call(this, d, i, node, template);
     }
@@ -33623,7 +33624,6 @@ Block = (function() {
     link = selection.selectAll(".link").data(tree(root).links()).enter().append("path").attr("stroke", "#8284d7").attr("fill", "none").attr("d", function(d) {
       return __WEBPACK_IMPORTED_MODULE_0_d3__["g" /* linkHorizontal */]().x(direction * d.source.y).y(d.source.x)(d);
     }).transition().delay(function(d) {
-      console.log(d);
       if (d.source.parent) {
         return d.target.delay = 2200 + (Math.random() * 7700);
       } else {
@@ -33694,6 +33694,8 @@ Block = (function() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_faker__ = __webpack_require__(659);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_faker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_faker__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Util__ = __webpack_require__(259);
+var stations;
+
 
 
 
@@ -33702,13 +33704,205 @@ Block = (function() {
 
 __WEBPACK_IMPORTED_MODULE_1_faker__["locale"] = "ko";
 
+stations = [
+  {
+    "ECHARE_STATION_ID": "tSTA0001",
+    "addr": "전라남도 나주시 빛가람로 719 ",
+    "name": "빛가람동주민센터",
+    "chargerType": "AC완속",
+    "ESTATION_LOC_LATITUDE": 34.995541,
+    "ESTATION_LOC_LONGITUDE": 126.708152,
+    "NUM_ECHARGER": 1,
+    "PEER_TYPE": "aggrePeer",
+    "ESTATION_OPEN_TYPE": 0,
+    "COMMWITH": ["tSTA0005",
+  "tSTA0010",
+  "tSTA0014"]
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0002",
+    "addr": "전라남도 나주시 토계길 61 ",
+    "name": "송월동주민센터",
+    "chargerType": "AC완속",
+    "ESTATION_LOC_LATITUDE": 34.995793,
+    "ESTATION_LOC_LONGITUDE": 126.720037,
+    "NUM_ECHARGER": 2,
+    "PEER_TYPE": "Vpeer",
+    "ESTATION_OPEN_TYPE": 1,
+    "COMMWITH": []
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0003",
+    "addr": "전라남도 나주시 성북2길 6 ",
+    "name": "성북동주민센터",
+    "chargerType": "AC완속",
+    "ESTATION_LOC_LATITUDE": 35.025341,
+    "ESTATION_LOC_LONGITUDE": 126.713062,
+    "NUM_ECHARGER": 3,
+    "PEER_TYPE": "Vpeer",
+    "ESTATION_OPEN_TYPE": 2,
+    "COMMWITH": []
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0004",
+    "addr": "전라남도 나주시 영산포로182-7 ",
+    "name": "이창동주민센터",
+    "chargerType": "AC완속",
+    "ESTATION_LOC_LATITUDE": 35.028351,
+    "ESTATION_LOC_LONGITUDE": 126.714340,
+    "NUM_ECHARGER": 4,
+    "PEER_TYPE": "Vpeer",
+    "ESTATION_OPEN_TYPE": 0,
+    "COMMWITH": []
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0005",
+    "addr": "전라남도 나주시 나주역길 56 ",
+    "name": "나주역(KTX)",
+    "chargerType": "AC완속",
+    "ESTATION_LOC_LATITUDE": 35.029079,
+    "ESTATION_LOC_LONGITUDE": 126.725340,
+    "NUM_ECHARGER": 5,
+    "PEER_TYPE": "aggrePeer",
+    "ESTATION_OPEN_TYPE": 1,
+    "COMMWITH": ["tSTA0001",
+  "tSTA0010",
+  "tSTA0014"]
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0006",
+    "addr": "전라남도 나주시 나주역길 56 ",
+    "name": "나주역(KTX)",
+    "chargerType": "AC완속",
+    "ESTATION_LOC_LATITUDE": 35.042165,
+    "ESTATION_LOC_LONGITUDE": 126.716205,
+    "NUM_ECHARGER": 1,
+    "PEER_TYPE": "Vpeer",
+    "ESTATION_OPEN_TYPE": 2,
+    "COMMWITH": []
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0007",
+    "addr": "전라남도 나주시 왕건길 53 ",
+    "name": "나주지사",
+    "chargerType": "DC차데모+AC3상+DC콤보",
+    "ESTATION_LOC_LATITUDE": 35.020839,
+    "ESTATION_LOC_LONGITUDE": 126.781584,
+    "NUM_ECHARGER": 2,
+    "PEER_TYPE": "Vpeer",
+    "ESTATION_OPEN_TYPE": 0,
+    "COMMWITH": []
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0008",
+    "addr": "전라남도 나주시 왕건길 53 ",
+    "name": "나주지사",
+    "chargerType": "DC차데모+AC3상+DC콤보",
+    "ESTATION_LOC_LATITUDE": 35.023886,
+    "ESTATION_LOC_LONGITUDE": 126.785650,
+    "NUM_ECHARGER": 3,
+    "PEER_TYPE": "Vpeer",
+    "ESTATION_OPEN_TYPE": 1,
+    "COMMWITH": []
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0009",
+    "addr": "전라남도 나주시 전력로 55 ",
+    "name": "한전본사 남측주차장",
+    "chargerType": "DC차데모+AC3상",
+    "ESTATION_LOC_LATITUDE": 34.983464,
+    "ESTATION_LOC_LONGITUDE": 126.685057,
+    "NUM_ECHARGER": 4,
+    "PEER_TYPE": "Vpeer",
+    "ESTATION_OPEN_TYPE": 2,
+    "COMMWITH": []
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0010",
+    "addr": "전라남도 나주시 전력로 55 ",
+    "name": "한전본사 파빌리온주차장",
+    "chargerType": "DC차데모+AC3상+DC콤보",
+    "ESTATION_LOC_LATITUDE": 34.976902,
+    "ESTATION_LOC_LONGITUDE": 126.678130,
+    "NUM_ECHARGER": 5,
+    "PEER_TYPE": "aggrePeer",
+    "ESTATION_OPEN_TYPE": 0,
+    "COMMWITH": ["tSTA0005",
+  "tSTA0001",
+  "tSTA0014"]
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0011",
+    "addr": "전라남도 나주시 송월동 100 ",
+    "name": "나주시청",
+    "chargerType": "DC차데모+AC3상+DC콤보",
+    "ESTATION_LOC_LATITUDE": 34.989929,
+    "ESTATION_LOC_LONGITUDE": 126.779338,
+    "NUM_ECHARGER": 1,
+    "PEER_TYPE": "Vpeer",
+    "ESTATION_OPEN_TYPE": 2,
+    "COMMWITH": []
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0012",
+    "addr": "전라남도 나주시 성북동 145-4 ",
+    "name": "성북동 주민센터",
+    "chargerType": "DC차데모+AC3상+DC콤보",
+    "ESTATION_LOC_LATITUDE": 35.000918,
+    "ESTATION_LOC_LONGITUDE": 126.802599,
+    "NUM_ECHARGER": 2,
+    "PEER_TYPE": "Vpeer",
+    "ESTATION_OPEN_TYPE": 1,
+    "COMMWITH": []
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0013",
+    "addr": "전라남도 나주시 이창동 511-9 ",
+    "name": "이창동 주민센터",
+    "chargerType": "DC차데모+AC3상+DC콤보",
+    "ESTATION_LOC_LATITUDE": 34.913115,
+    "ESTATION_LOC_LONGITUDE": 126.657689,
+    "NUM_ECHARGER": 3,
+    "PEER_TYPE": "Vpeer",
+    "ESTATION_OPEN_TYPE": 2,
+    "COMMWITH": []
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0014",
+    "addr": "전라남도 나주시 다시면 회진리 163 ",
+    "name": "천연염색문화관",
+    "chargerType": "DC차데모+AC3상+DC콤보",
+    "ESTATION_LOC_LATITUDE": 34.956448,
+    "ESTATION_LOC_LONGITUDE": 126.782025,
+    "NUM_ECHARGER": 4,
+    "PEER_TYPE": "aggrePeer",
+    "ESTATION_OPEN_TYPE": 1,
+    "COMMWITH": ["tSTA0005",
+  "tSTA0010",
+  "tSTA0001"]
+  },
+  {
+    "ECHARE_STATION_ID": "tSTA0015",
+    "addr": "전라남도 나주시 반남면 신촌리 262-1 ",
+    "name": "반남국립박물관",
+    "chargerType": "DC차데모+AC3상+DC콤보",
+    "ESTATION_LOC_LATITUDE": 35.044207,
+    "ESTATION_LOC_LONGITUDE": 126.847201,
+    "NUM_ECHARGER": 5,
+    "PEER_TYPE": "Vpeer",
+    "ESTATION_OPEN_TYPE": 0,
+    "COMMWITH": []
+  }
+];
+
+// --------- dummy data gen ---------
 var dummyCarDataGen = function(v) {
   var i, idx, ref, results;
   results = [];
   for (idx = i = 0, ref = Object(__WEBPACK_IMPORTED_MODULE_2__Util__["c" /* randomN */])(5); 0 <= ref ? i <= ref : i >= ref; idx = 0 <= ref ? ++i : --i) {
     results.push({
       type: 'car',
-      id: `car_${idx}`,
+      id: `${v}_car_${idx}`,
       depth: 2
     });
   }
@@ -33721,9 +33915,9 @@ var dummyStationDataGen = function(v) {
   for (idx = i = 0, ref = Object(__WEBPACK_IMPORTED_MODULE_2__Util__["c" /* randomN */])(3); 0 <= ref ? i <= ref : i >= ref; idx = 0 <= ref ? ++i : --i) {
     results.push({
       type: 'station',
-      id: `st_${idx}`,
+      id: `B${v}_st_${idx}`,
       depth: 1,
-      children: dummyCarDataGen(`st_${idx}`)
+      children: dummyCarDataGen(`B${v}_st_${idx}`)
     });
   }
   return results;

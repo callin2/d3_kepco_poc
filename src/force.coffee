@@ -1,6 +1,5 @@
 import * as d3 from "d3"
 import * as most from "most"
-import {periodic} from "most"
 import ForceBlock from "./view/ForceBlock"
 import {$countdownFrom , $everyNsec, randomN,  } from "./Util.coffee"
 
