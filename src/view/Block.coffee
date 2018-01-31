@@ -126,8 +126,10 @@ Block = do ->
       .attr("d", (d)-> d3.linkHorizontal().x(direction*d.source.y).y(d.source.x)(d))
       .transition()
       .delay((d)->
+        console.log d
+
         if d.source.parent
-          2200
+          d.target.delay = 2200 + (Math.random() * 7700)
         else
           0
       )
@@ -158,7 +160,7 @@ Block = do ->
         switch d.data.type
           when 'block' then 0
           when 'station' then 0
-          when 'car' then 2200
+          when 'car' then d.delay
       )
       .duration((d)->
         switch d.data.type

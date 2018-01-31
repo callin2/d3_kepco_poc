@@ -125,23 +125,22 @@ function initMap() {
     });
 
 
-    $('#recentEvents').on('click',(evt)=>{
-		alert();
-        var sid = $(evt.target).parents('tr').data('stationid')
-        // console.log('sid', sid)
-        var stn = getStation(sid)
+    // $('#recentEvents').on('click',(evt)=>{
+		// alert();
+    //     var sid = $(evt.target).parents('tr').data('stationid')
+    //     console.log('sid', sid)
+    //     var stn = getStation(sid)
+    //     console.log(stn)
+    //     // map.setCenter({lat: stn.ESTATION_LOC_LONGITUDE, lng: stn.ESTATION_LOC_LATITUDE})
+    //
+    //     map.panTo({lat: stn.ESTATION_LOC_LATITUDE, lng: stn.ESTATION_LOC_LONGITUDE})
+    // })
 
-        // map.setCenter({lat: stn.ESTATION_LOC_LONGITUDE, lng: stn.ESTATION_LOC_LATITUDE})
-
-        map.panTo({lat: stn.ESTATION_LOC_LATITUDE, lng: stn.ESTATION_LOC_LONGITUDE})
-    })
-
-
-
-    $('.showChart').on('click',(evt)=>{
+    $('.showChart').on('click',evt=>{
         $('#detailInfo').toggleClass('show'); 
         $('.detailInfo-box').toggleClass('show');
     });
+
 }
 
 
@@ -150,7 +149,10 @@ function getStation(sid) {
     return stations[idx]
 }
 
-
+function getCharger(id) {
+    var idx = echargers.findIndex(s=>s.ECHARGER_ID === id)
+    return echargers[idx]
+}
 
 function drawLinkFrom(fromStation) {
     fromStation.COMMWITH.forEach(t=>{
@@ -186,7 +188,7 @@ function drawLink() {
 */
 function addToRankControl(s) {
     var cnt = $('div[name=station_list').length;
-    // console.log('cnt', cnt);
+    // console.log(s);
     if(cnt >= 10){
 		var div_list = new Array();
 
@@ -200,15 +202,15 @@ function addToRankControl(s) {
 	// $('div[name=station_list]').css("opacity",1);
 	var per = Math.floor((s.amount/s.max_amount)*100);
     var div_str =
-        '<div class="card realtime" name="station_list" id="station_list_'+list_idx+'">'+
+        `<div class="card realtime" name="station_list" id="station_list_'+list_idx+'"  data-stationid="${s.ECHARE_STATION_ID}" >`+
 			'<ul>'+
                 '<li>'+
                     '<h2 class="realtime-title title"><span>'+s.ECHARE_STATION_ID+'</span><br/>'+
-                    '<small><i class="fa fa-map-marker"></i> 제주시 노형동 중앙초등학교점</small></h2>'+
+                    `<small><i class="fa fa-map-marker"></i> ${s.addr}</small></h2>`+
                 '</li>'+
                 '<li>'+
                     '<div><i class="fa fa-car"></i> '+s.evehicle_model_name+'</div>'+
-                    '<div class="realtime__subtitle">HYUNDAI</div>'+
+                    '<div class="realtime__subtitle"></div>'+
                 '</li>'+
 				'<li>'+
 				    '<div>'+per+'%';
@@ -267,7 +269,6 @@ function showInfo(station, marker) {
         `<li>${v.ECHARGER_ID}(${v.ECHARGER_CONNECTOR_TYPE})  <a href="#" class="button button-sm ${ Math.random() <0.8 ? 'button-diabled' : ''}"><i class="fa fa-plug"></i></a></li>`
     )
 
-
     var contentString = '<div id="content">' +
         `<h2 class="title">${station.name} 충전기 현황<br/><small><i class="fa fa-map-marker"></i> ${station.addr}</small></h2>`+
         '<ul>' + tmpl.join('')
@@ -299,35 +300,35 @@ function addStationMarker(s) {
     marker['_station'] = s
 }
 
-function getBusyStation(limit) {
-    // return fetch('https://gist.githubusercontent.com/jhs9396/13dee5bf7ca8a94e98fa350dfff9d8bc/raw/7f5b7d15d97ab15ed7c5258ceafbac3975a2934f/station_temp.txt')
-    //     .then(function(response) {
-    //         return response.json()
-    //     }).then(function(json) {
-    //         console.log('parsed json', json)
-    //         return stations = json.station
-    //     }).catch(function(ex) {
-    //         console.log('parsing failed', ex)
-    //     });
-
-    Promise.resolve([
-            {"ECHARE_STATION_ID":"tSTA0001","ESTATION_LOC_LATITUDE":34.995541,"ESTATION_LOC_LONGITUDE":126.708152,"NUM_ECHARGER":1,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0002","tSTA0003","tSTA0004","tSTA0005","tSTA0006"]},
-            {"ECHARE_STATION_ID":"tSTA0002","ESTATION_LOC_LATITUDE":34.995793,"ESTATION_LOC_LONGITUDE":126.720037,"NUM_ECHARGER":2,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0001","tSTA0003","tSTA0005","tSTA0007"]},
-            {"ECHARE_STATION_ID":"tSTA0003","ESTATION_LOC_LATITUDE":35.025341,"ESTATION_LOC_LONGITUDE":126.713062,"NUM_ECHARGER":3,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0001","tSTA0002","tSTA0010","tSTA0015"]},
-            {"ECHARE_STATION_ID":"tSTA0004","ESTATION_LOC_LATITUDE":35.028351,"ESTATION_LOC_LONGITUDE":126.714340,"NUM_ECHARGER":4,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0001","tSTA0008","tSTA0009","tSTA0010","tSTA0011"]},
-            {"ECHARE_STATION_ID":"tSTA0005","ESTATION_LOC_LATITUDE":35.029079,"ESTATION_LOC_LONGITUDE":126.725340,"NUM_ECHARGER":5,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0001","tSTA0002"]},
-            {"ECHARE_STATION_ID":"tSTA0006","ESTATION_LOC_LATITUDE":35.042165,"ESTATION_LOC_LONGITUDE":126.716205,"NUM_ECHARGER":1,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0001","tSTA0012","tSTA0013"]},
-            {"ECHARE_STATION_ID":"tSTA0007","ESTATION_LOC_LATITUDE":35.020839,"ESTATION_LOC_LONGITUDE":126.781584,"NUM_ECHARGER":2,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0002","tSTA0014"]},
-            {"ECHARE_STATION_ID":"tSTA0008","ESTATION_LOC_LATITUDE":35.023886,"ESTATION_LOC_LONGITUDE":126.785650,"NUM_ECHARGER":3,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0004"]},
-            {"ECHARE_STATION_ID":"tSTA0009","ESTATION_LOC_LATITUDE":34.983464,"ESTATION_LOC_LONGITUDE":126.685057,"NUM_ECHARGER":4,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0004"]},
-            {"ECHARE_STATION_ID":"tSTA0010","ESTATION_LOC_LATITUDE":34.976902,"ESTATION_LOC_LONGITUDE":126.678130,"NUM_ECHARGER":5,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0003","tSTA0004"]},
-            {"ECHARE_STATION_ID":"tSTA0011","ESTATION_LOC_LATITUDE":34.989929,"ESTATION_LOC_LONGITUDE":126.779338,"NUM_ECHARGER":1,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0004"]},
-            {"ECHARE_STATION_ID":"tSTA0012","ESTATION_LOC_LATITUDE":35.000918,"ESTATION_LOC_LONGITUDE":126.802599,"NUM_ECHARGER":2,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0006"]},
-            {"ECHARE_STATION_ID":"tSTA0013","ESTATION_LOC_LATITUDE":34.913115,"ESTATION_LOC_LONGITUDE":126.657689,"NUM_ECHARGER":3,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0006"]},
-            {"ECHARE_STATION_ID":"tSTA0014","ESTATION_LOC_LATITUDE":34.956448,"ESTATION_LOC_LONGITUDE":126.782025,"NUM_ECHARGER":4,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0007"]},
-            {"ECHARE_STATION_ID":"tSTA0015","ESTATION_LOC_LATITUDE":35.044207,"ESTATION_LOC_LONGITUDE":126.847201,"NUM_ECHARGER":5,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0003"]}
-    ])
-}
+// function getBusyStation(limit) {
+//     // return fetch('https://gist.githubusercontent.com/jhs9396/13dee5bf7ca8a94e98fa350dfff9d8bc/raw/7f5b7d15d97ab15ed7c5258ceafbac3975a2934f/station_temp.txt')
+//     //     .then(function(response) {
+//     //         return response.json()
+//     //     }).then(function(json) {
+//     //         console.log('parsed json', json)
+//     //         return stations = json.station
+//     //     }).catch(function(ex) {
+//     //         console.log('parsing failed', ex)
+//     //     });
+//
+//     Promise.resolve([
+//             {"ECHARE_STATION_ID":"tSTA0001","ESTATION_LOC_LATITUDE":34.995541,"ESTATION_LOC_LONGITUDE":126.708152,"NUM_ECHARGER":1,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0002","tSTA0003","tSTA0004","tSTA0005","tSTA0006"]},
+//             {"ECHARE_STATION_ID":"tSTA0002","ESTATION_LOC_LATITUDE":34.995793,"ESTATION_LOC_LONGITUDE":126.720037,"NUM_ECHARGER":2,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0001","tSTA0003","tSTA0005","tSTA0007"]},
+//             {"ECHARE_STATION_ID":"tSTA0003","ESTATION_LOC_LATITUDE":35.025341,"ESTATION_LOC_LONGITUDE":126.713062,"NUM_ECHARGER":3,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0001","tSTA0002","tSTA0010","tSTA0015"]},
+//             {"ECHARE_STATION_ID":"tSTA0004","ESTATION_LOC_LATITUDE":35.028351,"ESTATION_LOC_LONGITUDE":126.714340,"NUM_ECHARGER":4,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0001","tSTA0008","tSTA0009","tSTA0010","tSTA0011"]},
+//             {"ECHARE_STATION_ID":"tSTA0005","ESTATION_LOC_LATITUDE":35.029079,"ESTATION_LOC_LONGITUDE":126.725340,"NUM_ECHARGER":5,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0001","tSTA0002"]},
+//             {"ECHARE_STATION_ID":"tSTA0006","ESTATION_LOC_LATITUDE":35.042165,"ESTATION_LOC_LONGITUDE":126.716205,"NUM_ECHARGER":1,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0001","tSTA0012","tSTA0013"]},
+//             {"ECHARE_STATION_ID":"tSTA0007","ESTATION_LOC_LATITUDE":35.020839,"ESTATION_LOC_LONGITUDE":126.781584,"NUM_ECHARGER":2,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0002","tSTA0014"]},
+//             {"ECHARE_STATION_ID":"tSTA0008","ESTATION_LOC_LATITUDE":35.023886,"ESTATION_LOC_LONGITUDE":126.785650,"NUM_ECHARGER":3,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0004"]},
+//             {"ECHARE_STATION_ID":"tSTA0009","ESTATION_LOC_LATITUDE":34.983464,"ESTATION_LOC_LONGITUDE":126.685057,"NUM_ECHARGER":4,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0004"]},
+//             {"ECHARE_STATION_ID":"tSTA0010","ESTATION_LOC_LATITUDE":34.976902,"ESTATION_LOC_LONGITUDE":126.678130,"NUM_ECHARGER":5,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0003","tSTA0004"]},
+//             {"ECHARE_STATION_ID":"tSTA0011","ESTATION_LOC_LATITUDE":34.989929,"ESTATION_LOC_LONGITUDE":126.779338,"NUM_ECHARGER":1,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0004"]},
+//             {"ECHARE_STATION_ID":"tSTA0012","ESTATION_LOC_LATITUDE":35.000918,"ESTATION_LOC_LONGITUDE":126.802599,"NUM_ECHARGER":2,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0006"]},
+//             {"ECHARE_STATION_ID":"tSTA0013","ESTATION_LOC_LATITUDE":34.913115,"ESTATION_LOC_LONGITUDE":126.657689,"NUM_ECHARGER":3,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":2,"COMMWITH":["tSTA0006"]},
+//             {"ECHARE_STATION_ID":"tSTA0014","ESTATION_LOC_LATITUDE":34.956448,"ESTATION_LOC_LONGITUDE":126.782025,"NUM_ECHARGER":4,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":1,"COMMWITH":["tSTA0007"]},
+//             {"ECHARE_STATION_ID":"tSTA0015","ESTATION_LOC_LATITUDE":35.044207,"ESTATION_LOC_LONGITUDE":126.847201,"NUM_ECHARGER":5,"PEER_TYPE":"Vpeer","ESTATION_OPEN_TYPE":0,"COMMWITH":["tSTA0003"]}
+//     ])
+// }
 
 function getStations() {
     // return fetch('https://gist.githubusercontent.com/jhs9396/13dee5bf7ca8a94e98fa350dfff9d8bc/raw/7f5b7d15d97ab15ed7c5258ceafbac3975a2934f/station_temp.txt')
@@ -535,13 +536,19 @@ function getEVehicle() {
         ])
 }
 
-
 function addControl(m) {
     var divElem =  document.getElementById('recentEvents');
 
     // Setup the click event listeners: simply set the map to Chicago.
     divElem.addEventListener('click', function(evt) {
         console.log(evt)
+        var sid = $(evt.target).parents('.card.realtime').data('stationid')
+        console.log('sid', sid)
+        var stn = getStation(sid)
+        console.log(stn)
+        // map.setCenter({lat: stn.ESTATION_LOC_LONGITUDE, lng: stn.ESTATION_LOC_LATITUDE})
+
+        map.panTo({lat: stn.ESTATION_LOC_LATITUDE, lng: stn.ESTATION_LOC_LONGITUDE})
     });
 
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(divElem);
@@ -608,6 +615,7 @@ function to_json(param,stations,charges,vehicles){
 
     // Station, ECharger, EVehicle Object 저장
     var station_id = stations[random1].ECHARE_STATION_ID;				// 충전소 ID
+    var addr = stations[random1].addr;				                    // 충전소 주소
     var echarger_id = charges[random2].ECHARGER_ID;						// 충전기 ID
     var evehicle_id = vehicles[random3].eVehicle_id;					// 전기차 ID
     var evehicle_remain_amt = vehicles[random3].remaining_amount;		// 전기차 잔여전기량
@@ -643,6 +651,7 @@ function to_json(param,stations,charges,vehicles){
     // A object (충전시작)
     var jsonObj = new Object();
     jsonObj.ECHARE_STATION_ID	= station_id;
+    jsonObj.addr			    = addr;
     jsonObj.ECHARGER_ID			= echarger_id;
     jsonObj.eVehicle_id			= evehicle_id;
     jsonObj.evehicle_model_name = evehicle_model_name;
@@ -652,6 +661,7 @@ function to_json(param,stations,charges,vehicles){
     // B object (충전 끝)
     var jsonObj2 = new Object();
     jsonObj2.ECHARE_STATION_ID	= station_id;
+    jsonObj2.addr  		        = addr;
     jsonObj2.ECHARGER_ID		= echarger_id;
     jsonObj2.eVehicle_id		= evehicle_id;
     jsonObj2.evehicle_model_name = evehicle_model_name;
@@ -939,6 +949,18 @@ $(function(){
         });
 
         console.error(JSON.stringify(cytoElements))
+    });
 
+    $('#detailInfo').on('click', 'a.button', evt=>{
+        chargerid = $(evt.target).parents('tr').data('chargerid')
+
+        var charger = getCharger(chargerid)
+
+        var sid = $(evt.target).parents('tr').data('stationid')
+        console.log('sid', sid)
+        var stn = getStation(charger.ECHARE_STATION_ID)
+        console.log(stn)
+
+        map.panTo({lat: stn.ESTATION_LOC_LATITUDE, lng: stn.ESTATION_LOC_LONGITUDE})
     })
 });
